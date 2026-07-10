@@ -59,6 +59,7 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
       </div>
 
       {/* WORKS */}
+      {works.length > 0 && (
       <section className="px-6 py-16 sm:px-10 sm:py-24">
         <div className="mb-10 flex items-end justify-between">
           <h2 className="pf-display text-sm font-bold tracking-[0.3em]">
@@ -108,6 +109,7 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
           })}
         </div>
       </section>
+      )}
 
       {/* FOOTER */}
       <footer className="border-t border-[var(--pf-line)] px-6 py-16 sm:px-10 sm:py-24">

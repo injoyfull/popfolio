@@ -1,10 +1,12 @@
+import { notFound } from "next/navigation";
 import BrandPage from "@/components/brand/BrandPage";
 import { SAMPLE_PORTFOLIO } from "@/lib/sample";
 import { MOODS } from "@/lib/moods";
+import { getPortfolio } from "@/lib/storage";
 import type { MoodId } from "@/lib/types";
 
-// M2: 저장 계층(M3) 전까지는 샘플 포트폴리오를 렌더한다.
-// ?mood=modern|warm|minimal|vivid 로 무드를 즉석 미리보기할 수 있다.
+// /p/{id} — 저장된 포트폴리오를 파일에서 읽어 렌더한다.
+// 특수 id "sample"은 샘플 데이터. ?mood=... 로 무드 미리보기 가능(샘플/실데이터 모두).
 export default async function PortfolioPage({
   params,
   searchParams,
@@ -12,13 +14,18 @@ export default async function PortfolioPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ mood?: string }>;
 }) {
-  await params; // id는 M3에서 파일 조회에 사용 예정
+  const { id } = await params;
   const { mood } = await searchParams;
+
+  const base =
+    id === "sample" ? SAMPLE_PORTFOLIO : await getPortfolio(id);
+
+  if (!base) notFound();
 
   const portfolio =
     mood && mood in MOODS
-      ? { ...SAMPLE_PORTFOLIO, mood: mood as MoodId }
-      : SAMPLE_PORTFOLIO;
+      ? { ...base, mood: mood as MoodId }
+      : base;
 
   return <BrandPage portfolio={portfolio} />;
 }
