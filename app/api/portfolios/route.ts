@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     if (file.size === 0) continue;
     const filename = `${String(i + 1).padStart(2, "0")}${extFor(file)}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    const image = await saveImage(id, filename, buffer);
+    const image = await saveImage(id, filename, buffer, file.type || undefined);
     const caption = (captions[i] ?? "").trim();
     items.push({
       id: `im_${i + 1}`,
