@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <rect width="1000" height="1250" fill="#0f0f12"/>
+  <rect x="0" y="0" width="1000" height="1250" fill="none" stroke="#26262e" stroke-width="1"/>
+  <g fill="#f4f4f5" font-family="Arial, sans-serif" font-weight="800">
+    <text x="80" y="300" font-size="220" letter-spacing="-10">Aa</text>
+    <text x="620" y="300" font-size="220" letter-spacing="-10" fill="#c8fa4b">Bb</text>
+    <text x="80" y="560" font-size="220" letter-spacing="-10" fill="#c8fa4b">Cc</text>
+    <text x="620" y="560" font-size="220" letter-spacing="-10">Dd</text>
+  </g>
+  <line x1="80" y1="640" x2="920" y2="640" stroke="#3a3a44" stroke-width="2"/>
+  <text x="80" y="720" font-family="Arial, sans-serif" font-size="28" fill="#9a9aa6" letter-spacing="6">TYPE SPECIMEN</text>
+  <g font-family="Arial, sans-serif" fill="#f4f4f5">
+    <text x="80" y="900" font-size="64" font-weight="300">Thin</text>
+    <text x="80" y="990" font-size="64" font-weight="500">Regular</text>
+    <text x="80" y="1080" font-size="64" font-weight="800">Bold</text>
+  </g>
+  <rect x="640" y="840" width="280" height="280" fill="#c8fa4b"/>
+  <text x="680" y="1010" font-family="Arial, sans-serif" font-size="150" font-weight="800" fill="#0f0f12">36</text>
+</svg>

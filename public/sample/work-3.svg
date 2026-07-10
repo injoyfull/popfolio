@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <rect width="1000" height="1250" fill="#f3ebdc"/>
+  <circle cx="330" cy="360" r="240" fill="#c2543a"/>
+  <rect x="520" y="120" width="360" height="360" fill="#2f5d50"/>
+  <path d="M120 640 L500 640 L310 980 Z" fill="#e8a33d"/>
+  <rect x="540" y="640" width="340" height="340" rx="170" fill="#3a2a1e"/>
+  <rect x="120" y="1040" width="760" height="90" fill="#c2543a"/>
+  <text x="150" y="1102" font-family="Georgia, serif" font-size="56" fill="#fbf6ec" letter-spacing="2">Bauhaus Study No.3</text>
+</svg>

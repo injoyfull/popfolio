@@ -1,26 +1,72 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-noto);
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-noto), system-ui, sans-serif;
+}
+
+/* ── 브랜드 페이지 루트 ─────────────────────────────
+   무드 토큰(--pf-*)이 여기 주입되고, 하위 요소가 참조한다. */
+.pf-root {
+  background: var(--pf-bg);
+  color: var(--pf-ink);
+  font-family: var(--pf-body);
+}
+
+.pf-display {
+  font-family: var(--pf-display);
+  text-transform: var(--pf-display-transform);
+}
+
+/* hero 이름: 뷰포트에 맞춰 크게 */
+.pf-hero-name {
+  font-family: var(--pf-display);
+  font-weight: var(--pf-hero-weight);
+  letter-spacing: var(--pf-hero-tracking);
+  text-transform: var(--pf-display-transform);
+  line-height: 0.92;
+  font-size: clamp(3rem, 13vw, 12rem);
+}
+
+/* ── 흐르는 마퀴 (브랜드 이름 반복) ───────────────── */
+.pf-marquee {
+  display: flex;
+  width: max-content;
+  animation: pf-scroll 28s linear infinite;
+}
+@keyframes pf-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-marquee {
+    animation: none;
+  }
+}
+
+/* 작업 이미지 호버 살짝 확대 */
+.pf-work-img {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.pf-work:hover .pf-work-img {
+  transform: scale(1.03);
 }

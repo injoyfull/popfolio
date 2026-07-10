@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <rect width="1000" height="1250" fill="#fafafa"/>
+  <g stroke="#141414" stroke-width="1.5" fill="none">
+    <rect x="120" y="120" width="760" height="1010"/>
+    <line x1="120" y1="373" x2="880" y2="373"/>
+    <line x1="120" y1="626" x2="880" y2="626"/>
+    <line x1="120" y1="879" x2="880" y2="879"/>
+    <line x1="373" y1="120" x2="373" y2="1130"/>
+    <line x1="626" y1="120" x2="626" y2="1130"/>
+  </g>
+  <circle cx="246" cy="246" r="70" fill="#141414"/>
+  <rect x="556" y="426" width="140" height="140" fill="#141414"/>
+  <line x1="120" y1="879" x2="880" y2="1130" stroke="#141414" stroke-width="1.5"/>
+  <text x="120" y="1190" font-family="Arial, sans-serif" font-size="26" fill="#141414" letter-spacing="10">GRID SYSTEM — 05</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff7a59"/>
+      <stop offset="0.55" stop-color="#ff3d6e"/>
+      <stop offset="1" stop-color="#7b2ff7"/>
+    </linearGradient>
+    <radialGradient id="s1" cx="0.5" cy="0.42" r="0.5">
+      <stop offset="0" stop-color="#ffe08a"/>
+      <stop offset="1" stop-color="#ff7a59" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1000" height="1250" fill="url(#g1)"/>
+  <circle cx="500" cy="520" r="300" fill="url(#s1)"/>
+  <circle cx="500" cy="520" r="230" fill="none" stroke="#fff" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="120" y="960" width="760" height="4" fill="#fff" opacity="0.85"/>
+  <text x="120" y="1080" font-family="Georgia, serif" font-size="120" fill="#fff" letter-spacing="-4">SUNSET</text>
+  <text x="120" y="1160" font-family="Arial, sans-serif" font-size="34" fill="#fff" opacity="0.85" letter-spacing="8">SERIES / 001</text>
+</svg>
