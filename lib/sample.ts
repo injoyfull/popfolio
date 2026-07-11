@@ -1,5 +1,6 @@
-// 결과 페이지(M2)를 입력·저장 없이 먼저 눈으로 확인하기 위한 샘플 데이터.
-// 실제 저장 계층(M3)이 붙으면 이 자리를 파일에서 읽은 Portfolio가 대체한다.
+// 결과 페이지를 입력·저장 없이 눈으로 확인하기 위한 샘플 데이터.
+// 다양한 작품 종류(드로잉·만들기·사진·콜라주)를 카테고리로 묶은 "작업 아카이브" 예시.
+// ※ 여기 이미지들은 플레이스홀더 — 실제 작품이 준비되면 교체 예정.
 
 import type { Portfolio } from "./types";
 
@@ -8,46 +9,78 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
   createdAt: "2026-07-10T00:00:00.000Z",
   brand: {
     name: "Studio Yeeun",
-    tagline: "색과 형태로 감정을 번역하는 그래픽 스튜디오",
+    tagline: "그리고, 만들고, 찍고, 붙이며 쌓아가는 작업들",
     about:
-      "안녕하세요, 그래픽 디자이너 이예은입니다. 포스터와 타이포그래피를 주로 다루고, 브랜드가 가진 온도를 색으로 옮기는 작업을 좋아해요. 작은 팝업부터 브랜드 아이덴티티까지, 조용히 눈에 남는 것들을 만듭니다.",
+      "안녕하세요, 이예은입니다. 버려질 작업도 사진으로 남기면 경험이 됩니다. 드로잉부터 오브제·사진·콜라주까지, 요즘 손대는 것들을 이곳에 차곡차곡 모아둬요.",
   },
   mood: "modern",
   items: [
+    // 드로잉
     {
       id: "im_1",
-      image: "/sample/work-1.svg",
-      alt: "노을 그라디언트 포스터",
-      caption: "Sunset Series 001 — 그라디언트 포스터 연작",
+      image: "/sample/draw-doodle.svg",
+      caption: "Doodle Diary — 낙서처럼 매일 한 장",
+      category: "드로잉",
       order: 0,
     },
     {
       id: "im_2",
-      image: "/sample/work-2.svg",
-      alt: "타입 스페시멘",
-      caption: "Type Specimen — 자체 제작 서체의 무게별 실험",
+      image: "/sample/draw-emoji.svg",
+      caption: "Emoji Set — 이모티콘 표정 연습",
+      category: "드로잉",
       order: 1,
     },
     {
       id: "im_3",
-      image: "/sample/work-3.svg",
-      alt: "바우하우스 기하 구성",
-      caption: "Bauhaus Study No.3 — 도형과 색면 구성 습작",
+      image: "/sample/draw-paint.svg",
+      caption: "Untitled — 아크릴 색면 드로잉",
+      category: "드로잉",
       order: 2,
     },
+    // 만들기
     {
       id: "im_4",
-      image: "/sample/work-4.svg",
-      alt: "유체 그라디언트",
-      caption: "Fluid 04 — 흐르는 형태의 키 비주얼",
+      image: "/sample/make-objet.svg",
+      caption: "Vessel No.1 — 손으로 빚은 오브제",
+      category: "만들기",
       order: 3,
     },
     {
       id: "im_5",
-      image: "/sample/work-5.svg",
-      alt: "그리드 시스템",
-      caption: "Grid System 05 — 편집 레이아웃 기초 연구",
+      image: "/sample/make-stack.svg",
+      caption: "Balance — 돌을 쌓아 만든 오브제",
+      category: "만들기",
       order: 4,
+    },
+    // 사진
+    {
+      id: "im_6",
+      image: "/sample/photo-scape.svg",
+      caption: "저녁의 능선 — 35mm 필름",
+      category: "사진",
+      order: 5,
+    },
+    {
+      id: "im_7",
+      image: "/sample/photo-still.svg",
+      caption: "오후의 정물 — 창가에서",
+      category: "사진",
+      order: 6,
+    },
+    // 콜라주
+    {
+      id: "im_8",
+      image: "/sample/collage-paper.svg",
+      caption: "Cut & Paste — 찢은 종이 콜라주",
+      category: "콜라주",
+      order: 7,
+    },
+    {
+      id: "im_9",
+      image: "/sample/collage-cut.svg",
+      caption: "Mixed Cut — 잡지 오려 붙이기",
+      category: "콜라주",
+      order: 8,
     },
   ],
 };

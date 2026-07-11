@@ -1,30 +1,13 @@
 // POST /api/portfolios — 만들기 폼 제출을 받아 포트폴리오를 저장한다. (Plan.md §4)
 // multipart/form-data:
-//   name, tagline, about, mood  +  image(여러 개), caption(이미지와 같은 순서)
+//   name, tagline, about, mood  +  image(여러 개), caption, category(이미지와 같은 순서)
+// 응답: { id, editKey } — editKey는 나중에 작품을 이어 올리기 위한 비밀 키.
 
 import { generateId } from "@/lib/id";
-import { saveImage, savePortfolio } from "@/lib/storage";
+import { savePortfolio } from "@/lib/storage";
+import { buildWorkItems } from "@/lib/works-upload";
 import { MOODS, DEFAULT_MOOD } from "@/lib/moods";
-import type { MoodId, Portfolio, WorkItem } from "@/lib/types";
-
-const EXT_BY_TYPE: Record<string, string> = {
-  "image/png": ".png",
-  "image/jpeg": ".jpg",
-  "image/webp": ".webp",
-  "image/gif": ".gif",
-  "image/svg+xml": ".svg",
-  "image/avif": ".avif",
-};
-
-function extFor(file: File): string {
-  if (EXT_BY_TYPE[file.type]) return EXT_BY_TYPE[file.type];
-  const dot = file.name.lastIndexOf(".");
-  if (dot !== -1) {
-    const e = file.name.slice(dot).toLowerCase();
-    if (/^\.[a-z0-9]{1,5}$/.test(e)) return e;
-  }
-  return ".bin";
-}
+import type { MoodId, Portfolio } from "@/lib/types";
 
 export async function POST(request: Request) {
   let form: FormData;
@@ -39,32 +22,15 @@ export async function POST(request: Request) {
   const about = String(form.get("about") ?? "").trim();
 
   if (!name) {
-    return Response.json({ error: "브랜드 이름은 필요해요." }, { status: 400 });
+    return Response.json({ error: "이름은 필요해요." }, { status: 400 });
   }
 
   const moodRaw = String(form.get("mood") ?? "");
   const mood: MoodId = moodRaw in MOODS ? (moodRaw as MoodId) : DEFAULT_MOOD;
 
-  const images = form.getAll("image").filter((v): v is File => v instanceof File);
-  const captions = form.getAll("caption").map((v) => String(v));
-
   const id = generateId();
-  const items: WorkItem[] = [];
-
-  for (let i = 0; i < images.length; i++) {
-    const file = images[i];
-    if (file.size === 0) continue;
-    const filename = `${String(i + 1).padStart(2, "0")}${extFor(file)}`;
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const image = await saveImage(id, filename, buffer, file.type || undefined);
-    const caption = (captions[i] ?? "").trim();
-    items.push({
-      id: `im_${i + 1}`,
-      image,
-      caption: caption || undefined,
-      order: i,
-    });
-  }
+  const editKey = generateId(24);
+  const items = await buildWorkItems(id, form);
 
   const portfolio: Portfolio = {
     id,
@@ -72,9 +38,10 @@ export async function POST(request: Request) {
     brand: { name, tagline, about },
     mood,
     items,
+    editKey,
   };
 
   await savePortfolio(portfolio);
 
-  return Response.json({ id }, { status: 201 });
+  return Response.json({ id, editKey }, { status: 201 });
 }

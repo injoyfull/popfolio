@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <rect width="1000" height="1250" fill="#fff0f3"/>
+  <g stroke="#2a2320" stroke-width="6">
+    <!-- happy -->
+    <circle cx="290" cy="300" r="150" fill="#ffd23f"/>
+    <circle cx="245" cy="270" r="14" fill="#2a2320" stroke="none"/>
+    <circle cx="335" cy="270" r="14" fill="#2a2320" stroke="none"/>
+    <path d="M230 330 q60 70 120 0" fill="none" stroke-linecap="round"/>
+    <!-- wink -->
+    <circle cx="710" cy="300" r="150" fill="#8ce0c0"/>
+    <path d="M665 268 q0 -8 0 0" />
+    <path d="M645 270 h40" fill="none" stroke-linecap="round"/>
+    <circle cx="755" cy="270" r="14" fill="#2a2320" stroke="none"/>
+    <path d="M655 330 q55 55 110 10" fill="none" stroke-linecap="round"/>
+    <!-- surprised -->
+    <circle cx="290" cy="720" r="150" fill="#ff8fab"/>
+    <circle cx="245" cy="690" r="14" fill="#2a2320" stroke="none"/>
+    <circle cx="335" cy="690" r="14" fill="#2a2320" stroke="none"/>
+    <circle cx="290" cy="770" r="28" fill="#2a2320" stroke="none"/>
+    <!-- cool -->
+    <circle cx="710" cy="720" r="150" fill="#7aa2ff"/>
+    <rect x="640" y="690" width="140" height="34" rx="10" fill="#2a2320" stroke="none"/>
+    <path d="M660 775 h100" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="120" y="1050" font-family="Arial, sans-serif" font-weight="700" font-size="52" fill="#2a2320">EMOJI SET</text>
+  <text x="120" y="1110" font-family="Arial, sans-serif" font-size="34" fill="#7a6f6a">이모티콘 작업</text>
+</svg>

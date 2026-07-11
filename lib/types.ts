@@ -11,8 +11,13 @@ export interface WorkItem {
   alt?: string;
   /** 작업 설명 (사용자 입력 그대로) */
   caption?: string;
+  /** 카테고리(경험 묶음) 이름. 없으면 기본 묶음으로 취급 */
+  category?: string;
   order: number;
 }
+
+/** 카테고리 없는 작업을 담는 기본 묶음 라벨 */
+export const DEFAULT_CATEGORY = "작업";
 
 export interface Portfolio {
   id: string;
@@ -27,4 +32,9 @@ export interface Portfolio {
   };
   mood: MoodId;
   items: WorkItem[];
+  /**
+   * 비밀 편집키 — 로그인 없이 나중에 작품을 이어 올리기 위한 소유 증명.
+   * 공개 렌더 시에는 절대 노출하지 않는다(서버에서 제거 후 전달).
+   */
+  editKey?: string;
 }

@@ -1,16 +1,19 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { MOOD_LIST, DEFAULT_MOOD } from "@/lib/moods";
+import { prepareImage } from "@/lib/image-client";
 import type { MoodId } from "@/lib/types";
 
 interface Draft {
   key: string;
-  file: File;
+  blob: Blob;
+  name: string;
   url: string;
   caption: string;
+  category: string;
 }
 
 let draftSeq = 0;
@@ -25,22 +28,49 @@ export default function CreatePage() {
   const [mood, setMood] = useState<MoodId>(DEFAULT_MOOD);
   const [drafts, setDrafts] = useState<Draft[]>([]);
 
+  const [preparing, setPreparing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  function addFiles(files: FileList | null) {
-    if (!files) return;
-    const next: Draft[] = [];
-    for (const file of Array.from(files)) {
-      if (!file.type.startsWith("image/")) continue;
-      next.push({
-        key: `d${draftSeq++}`,
-        file,
-        url: URL.createObjectURL(file),
-        caption: "",
-      });
+  // 이미 입력된 카테고리들 (빠른 재사용용 datalist)
+  const usedCategories = useMemo(() => {
+    const set = new Set<string>();
+    for (const d of drafts) {
+      const c = d.category.trim();
+      if (c) set.add(c);
     }
-    if (next.length) setDrafts((prev) => [...prev, ...next]);
+    return [...set];
+  }, [drafts]);
+
+  async function addFiles(files: FileList | null) {
+    if (!files) return;
+    const imageFiles = Array.from(files).filter((f) =>
+      f.type.startsWith("image/"),
+    );
+    if (imageFiles.length === 0) return;
+
+    setError(null);
+    setPreparing(true);
+    try {
+      const prepared = await Promise.all(
+        imageFiles.map(async (file) => {
+          const p = await prepareImage(file);
+          return {
+            key: `d${draftSeq++}`,
+            blob: p.blob,
+            name: p.name,
+            url: p.previewUrl,
+            caption: "",
+            category: "",
+          } satisfies Draft;
+        }),
+      );
+      setDrafts((prev) => [...prev, ...prepared]);
+    } catch {
+      setError("이미지를 처리하지 못했어요. 다른 파일로 시도해 주세요.");
+    } finally {
+      setPreparing(false);
+    }
   }
 
   function removeDraft(key: string) {
@@ -62,9 +92,9 @@ export default function CreatePage() {
     });
   }
 
-  function setCaption(key: string, value: string) {
+  function patch(key: string, field: "caption" | "category", value: string) {
     setDrafts((prev) =>
-      prev.map((d) => (d.key === key ? { ...d, caption: value } : d)),
+      prev.map((d) => (d.key === key ? { ...d, [field]: value } : d)),
     );
   }
 
@@ -72,7 +102,7 @@ export default function CreatePage() {
     e.preventDefault();
     setError(null);
     if (!name.trim()) {
-      setError("브랜드(또는 작가) 이름을 적어주세요.");
+      setError("이름(또는 스튜디오 이름)을 적어주세요.");
       return;
     }
     setSubmitting(true);
@@ -83,8 +113,9 @@ export default function CreatePage() {
       fd.append("about", about.trim());
       fd.append("mood", mood);
       for (const d of drafts) {
-        fd.append("image", d.file);
+        fd.append("image", d.blob, d.name);
         fd.append("caption", d.caption);
+        fd.append("category", d.category);
       }
       const res = await fetch("/api/portfolios", {
         method: "POST",
@@ -94,8 +125,9 @@ export default function CreatePage() {
         const data = await res.json().catch(() => null);
         throw new Error(data?.error ?? "저장에 실패했어요. 다시 시도해 주세요.");
       }
-      const { id } = await res.json();
-      router.push(`/p/${id}`);
+      const { id, editKey } = await res.json();
+      const suffix = editKey ? `?created=1&k=${encodeURIComponent(editKey)}` : "";
+      router.push(`/p/${id}${suffix}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "알 수 없는 오류예요.");
       setSubmitting(false);
@@ -108,7 +140,7 @@ export default function CreatePage() {
         <Link href="/" className="font-bold tracking-tight">
           Popfolio
         </Link>
-        <span className="text-sm text-neutral-400">내 팝업 브랜드 만들기</span>
+        <span className="text-sm text-neutral-400">내 작업 아카이브 만들기</span>
       </header>
 
       <form
@@ -122,13 +154,13 @@ export default function CreatePage() {
           나머지 근사하게 세우는 건 Popfolio가 알아서 할게요.
         </p>
 
-        {/* 브랜드 정보 */}
+        {/* 기본 정보 */}
         <section className="mt-10 space-y-6">
-          <Field label="브랜드 · 작가 이름" required>
+          <Field label="이름 · 스튜디오" required>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="예: Studio Yeeun"
+              placeholder="예: 이도윤 / Studio Yeeun"
               className="pf-input"
             />
           </Field>
@@ -137,7 +169,7 @@ export default function CreatePage() {
             <input
               value={tagline}
               onChange={(e) => setTagline(e.target.value)}
-              placeholder="예: 색과 형태로 감정을 번역하는 그래픽 스튜디오"
+              placeholder="예: 그리고, 만들고, 쌓아가는 작업들"
               className="pf-input"
             />
           </Field>
@@ -147,7 +179,7 @@ export default function CreatePage() {
               value={about}
               onChange={(e) => setAbout(e.target.value)}
               rows={4}
-              placeholder="안녕하세요, 그래픽 디자이너 이예은입니다. 포스터와 타이포그래피를 주로 다뤄요."
+              placeholder="예: 안녕하세요, 일곱 살 도윤이의 작업 아카이브예요. 그림과 만들기를 좋아해요."
               className="pf-input resize-y"
             />
           </Field>
@@ -196,9 +228,10 @@ export default function CreatePage() {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="rounded-lg border border-neutral-300 px-3 py-1.5 text-sm font-medium hover:bg-neutral-100"
+              disabled={preparing}
+              className="rounded-lg border border-neutral-300 px-3 py-1.5 text-sm font-medium hover:bg-neutral-100 disabled:opacity-50"
             >
-              + 이미지 추가
+              {preparing ? "처리 중…" : "+ 이미지 추가"}
             </button>
             <input
               ref={fileInputRef}
@@ -212,15 +245,21 @@ export default function CreatePage() {
               }}
             />
           </div>
+          <p className="mt-1 text-xs text-neutral-400">
+            큰 사진도 괜찮아요 — 올리기 전에 자동으로 알맞게 줄여요.
+          </p>
 
           {drafts.length === 0 ? (
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="mt-4 flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-neutral-300 py-12 text-neutral-400 hover:border-neutral-400 hover:text-neutral-500"
+              disabled={preparing}
+              className="mt-4 flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-neutral-300 py-12 text-neutral-400 hover:border-neutral-400 hover:text-neutral-500 disabled:opacity-60"
             >
               <span className="text-3xl">＋</span>
-              <span className="mt-2 text-sm">작업 이미지를 올려보세요</span>
+              <span className="mt-2 text-sm">
+                {preparing ? "이미지 처리 중…" : "작업 사진을 올려보세요"}
+              </span>
             </button>
           ) : (
             <ul className="mt-4 space-y-3">
@@ -233,16 +272,23 @@ export default function CreatePage() {
                   <img
                     src={d.url}
                     alt=""
-                    className="h-20 w-20 shrink-0 rounded-lg object-cover"
+                    className="h-24 w-24 shrink-0 rounded-lg object-cover"
                   />
-                  <div className="flex flex-1 flex-col justify-between">
+                  <div className="flex flex-1 flex-col gap-2">
+                    <input
+                      value={d.category}
+                      onChange={(e) => patch(d.key, "category", e.target.value)}
+                      placeholder="카테고리 (예: 드로잉 · 만들기 · 사진)"
+                      list="pf-cats"
+                      className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm font-medium outline-none focus:border-neutral-500"
+                    />
                     <input
                       value={d.caption}
-                      onChange={(e) => setCaption(d.key, e.target.value)}
+                      onChange={(e) => patch(d.key, "caption", e.target.value)}
                       placeholder="이 작업 설명 (선택)"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
                     />
-                    <div className="mt-2 flex items-center gap-1 text-neutral-400">
+                    <div className="flex items-center gap-1 text-neutral-400">
                       <IconBtn
                         label="위로"
                         disabled={i === 0}
@@ -270,6 +316,11 @@ export default function CreatePage() {
               ))}
             </ul>
           )}
+          <datalist id="pf-cats">
+            {usedCategories.map((c) => (
+              <option key={c} value={c} />
+            ))}
+          </datalist>
         </section>
 
         {error && (
@@ -281,10 +332,10 @@ export default function CreatePage() {
         <div className="mt-10 flex items-center gap-3">
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || preparing}
             className="rounded-xl bg-neutral-900 px-6 py-3 font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
           >
-            {submitting ? "세우는 중…" : "내 브랜드 세우기 →"}
+            {submitting ? "세우는 중…" : "내 아카이브 세우기 →"}
           </button>
           <Link
             href="/p/sample"

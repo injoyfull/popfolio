@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <defs>
+    <radialGradient id="clay" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f0c9a8"/>
+      <stop offset="0.6" stop-color="#d99771"/>
+      <stop offset="1" stop-color="#a65b3e"/>
+    </radialGradient>
+  </defs>
+  <rect width="1000" height="1250" fill="#e7e2d8"/>
+  <ellipse cx="500" cy="980" rx="260" ry="42" fill="#c9c2b4"/>
+  <!-- organic vase -->
+  <path fill="url(#clay)" d="M500 300
+    c95 0 150 70 140 160
+    c-8 70 -60 90 -60 160
+    c0 70 70 110 70 200
+    c0 110 -90 170 -190 170
+    s-190 -60 -190 -170
+    c0 -90 70 -130 70 -200
+    c0 -70 -52 -90 -60 -160
+    c-10 -90 45 -160 140 -160 z"/>
+  <ellipse cx="500" cy="308" rx="92" ry="26" fill="#8f4f36"/>
+  <ellipse cx="500" cy="304" rx="92" ry="24" fill="#b06c4c"/>
+  <path d="M430 520 q70 40 140 0" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="10" stroke-linecap="round"/>
+  <text x="120" y="1130" font-family="Georgia, serif" font-size="42" fill="#3a2c22">Vessel No.1 — 오브제</text>
+</svg>

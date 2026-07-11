@@ -2,9 +2,11 @@ import type { CSSProperties } from "react";
 import type { Portfolio } from "@/lib/types";
 import { moodToCssVars } from "@/lib/moods";
 import ShareButton from "./ShareButton";
+import Gallery from "./Gallery";
 
-// 팝업 브랜드처럼 세워진 결과 페이지 (Plan.md §2 템플릿).
-// 무드 토큰을 .pf-root에 주입하면, 아래 요소들이 var(--pf-*)로 반응한다.
+// 결과 페이지 — "내 작업 아카이브" (Plan.md §9).
+// 압축된 헤더 + 카테고리 파노라마 갤러리(+전시 라이트박스).
+// 무드 토큰을 .pf-root에 주입하면 하위 요소가 var(--pf-*)로 반응한다.
 export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
   const { brand, items, createdAt } = portfolio;
   const year = new Date(createdAt).getFullYear();
@@ -21,103 +23,45 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
         <ShareButton className="bg-[var(--pf-accent)] text-[var(--pf-accent-ink)]" />
       </header>
 
-      {/* HERO */}
-      <section className="px-6 pb-10 pt-10 sm:px-10 sm:pt-16">
+      {/* HERO (압축) */}
+      <section className="px-6 pb-8 pt-8 sm:px-10 sm:pt-12">
         <div className="flex items-center gap-3 text-xs font-medium tracking-[0.3em] text-[var(--pf-ink-soft)]">
-          <span className="pf-display">PORTFOLIO</span>
+          <span className="pf-display">ARCHIVE</span>
           <span className="h-px flex-1 bg-[var(--pf-line)]" />
           <span>{year}</span>
         </div>
 
-        <h1 className="pf-hero-name mt-8 max-w-[14ch]">{brand.name}</h1>
+        <h1 className="pf-display mt-6 text-4xl font-bold leading-[1.02] tracking-tight sm:text-6xl">
+          {brand.name}
+        </h1>
 
-        <p className="pf-display mt-8 max-w-[24ch] text-2xl font-medium leading-tight sm:text-4xl">
-          {brand.tagline}
-        </p>
+        {brand.tagline && (
+          <p className="mt-4 max-w-[34ch] text-lg font-medium leading-snug text-[var(--pf-ink)] sm:text-2xl">
+            {brand.tagline}
+          </p>
+        )}
 
-        <p className="mt-8 max-w-[46ch] text-base leading-relaxed text-[var(--pf-ink-soft)] sm:text-lg">
-          {brand.about}
-        </p>
+        {brand.about && (
+          <p className="mt-5 max-w-[52ch] text-sm leading-relaxed text-[var(--pf-ink-soft)] sm:text-base">
+            {brand.about}
+          </p>
+        )}
       </section>
 
-      {/* 흐르는 브랜드 이름 마퀴 */}
-      <div className="overflow-hidden border-y border-[var(--pf-line)] bg-[var(--pf-accent)] py-4 text-[var(--pf-accent-ink)]">
-        <div className="pf-marquee">
-          {[0, 1].map((g) => (
-            <div key={g} className="flex shrink-0 items-center" aria-hidden={g === 1}>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <span
-                  key={i}
-                  className="pf-display px-6 text-2xl font-bold tracking-tight sm:text-3xl"
-                >
-                  {brand.name} <span className="opacity-60">✦</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      <div className="border-t border-[var(--pf-line)]" />
 
-      {/* WORKS */}
-      {works.length > 0 && (
-      <section className="px-6 py-16 sm:px-10 sm:py-24">
-        <div className="mb-10 flex items-end justify-between">
-          <h2 className="pf-display text-sm font-bold tracking-[0.3em]">
-            SELECTED WORKS
-          </h2>
-          <span className="text-sm text-[var(--pf-ink-soft)]">
-            {String(works.length).padStart(2, "0")} 작업
-          </span>
-        </div>
-
-        <div className="flex flex-col gap-16 sm:gap-24">
-          {works.map((w, i) => {
-            const flip = i % 2 === 1;
-            return (
-              <article
-                key={w.id}
-                className={`pf-work group grid items-center gap-6 sm:grid-cols-12 sm:gap-10 ${
-                  flip ? "" : ""
-                }`}
-              >
-                <div
-                  className={`overflow-hidden rounded-[var(--pf-radius)] border border-[var(--pf-line)] sm:col-span-8 ${
-                    flip ? "sm:order-2 sm:col-start-5" : ""
-                  }`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={w.image}
-                    alt={w.alt ?? w.caption ?? brand.name}
-                    className="pf-work-img block h-full w-full object-cover"
-                  />
-                </div>
-                <div
-                  className={`sm:col-span-4 ${flip ? "sm:order-1 sm:row-start-1" : ""}`}
-                >
-                  <span className="pf-display text-5xl font-bold text-[var(--pf-accent)] sm:text-6xl">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {w.caption && (
-                    <p className="mt-4 text-base leading-relaxed text-[var(--pf-ink)] sm:text-lg">
-                      {w.caption}
-                    </p>
-                  )}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-      )}
+      {/* 아카이브 갤러리 + 라이트박스 */}
+      <Gallery works={works} />
 
       {/* FOOTER */}
-      <footer className="border-t border-[var(--pf-line)] px-6 py-16 sm:px-10 sm:py-24">
+      <footer className="border-t border-[var(--pf-line)] px-6 py-14 sm:px-10 sm:py-20">
         <p className="pf-display text-xs font-medium tracking-[0.3em] text-[var(--pf-ink-soft)]">
-          THANKS FOR VISITING
+          작품은 버려져도, 경험은 쌓입니다
         </p>
-        <p className="pf-hero-name mt-6">{brand.name}</p>
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-6 border-t border-[var(--pf-line)] pt-8">
+        <p className="pf-display mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
+          {brand.name}
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-6 border-t border-[var(--pf-line)] pt-6">
           <span className="text-sm text-[var(--pf-ink-soft)]">
             Made with{" "}
             <span className="pf-display font-bold text-[var(--pf-ink)]">

@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Popfolio runtime data (user uploads + portfolio json)
 /data
+
+# 개인 사진 스테이징 (공개 저장소에 올리지 않음)
+/private

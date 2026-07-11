@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <rect width="1000" height="1250" fill="#f6f2e9"/>
+  <g fill="none" stroke="#20201c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 300 q80 -120 160 0 t160 0 t160 0"/>
+    <path d="M150 470 c60 40 120 -40 180 0 s120 60 180 10"/>
+    <circle cx="300" cy="720" r="120"/>
+    <path d="M250 700 q50 60 100 0"/>
+    <circle cx="262" cy="690" r="9" fill="#20201c"/>
+    <circle cx="338" cy="690" r="9" fill="#20201c"/>
+    <path d="M560 640 l120 180 -240 0 z"/>
+    <path d="M170 980 q120 -80 240 0 t240 0"/>
+    <path d="M640 980 c40 -60 120 -60 160 0"/>
+    <path d="M720 470 l0 120 M660 530 l120 0"/>
+  </g>
+  <text x="120" y="1160" font-family="Comic Sans MS, cursive" font-size="44" fill="#20201c">doodle diary</text>
+</svg>

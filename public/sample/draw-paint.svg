@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="14"/></filter>
+  </defs>
+  <rect width="1000" height="1250" fill="#efe9e0"/>
+  <g filter="url(#rough)" stroke-linecap="round">
+    <path d="M160 260 q180 -40 320 40" stroke="#e4572e" stroke-width="60" fill="none"/>
+    <path d="M540 360 q200 40 300 -30" stroke="#f3a712" stroke-width="70" fill="none"/>
+    <rect x="180" y="470" width="360" height="150" fill="#2e86ab"/>
+    <circle cx="700" cy="620" r="120" fill="#a23e97"/>
+    <path d="M180 780 q220 120 640 -10" stroke="#3b8c4b" stroke-width="80" fill="none"/>
+    <rect x="260" y="900" width="200" height="200" fill="#e4572e"/>
+    <circle cx="640" cy="990" r="90" fill="#f3a712"/>
+  </g>
+  <text x="120" y="1180" font-family="Georgia, serif" font-size="40" fill="#2a2320">Untitled — acrylic</text>
+</svg>

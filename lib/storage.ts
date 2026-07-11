@@ -8,7 +8,7 @@
 
 import { promises as fs } from "fs";
 import path from "path";
-import type { Portfolio } from "./types";
+import type { Portfolio, WorkItem } from "./types";
 import {
   getSupabase,
   usingSupabase,
@@ -133,6 +133,31 @@ export async function getPortfolio(id: string): Promise<Portfolio | null> {
   } catch {
     return null;
   }
+}
+
+/**
+ * 비밀 편집키를 확인하고 기존 포트폴리오에 작품을 이어붙인다.
+ * - 없는 id → null
+ * - 키 불일치 → "forbidden"
+ * - 성공 → 갱신된 Portfolio
+ * (newItems의 order는 여기서 기존 뒤로 재부여한다.)
+ */
+export async function appendItems(
+  id: string,
+  key: string,
+  newItems: WorkItem[],
+): Promise<Portfolio | null | "forbidden"> {
+  const portfolio = await getPortfolio(id);
+  if (!portfolio) return null;
+  if (!portfolio.editKey || portfolio.editKey !== key) return "forbidden";
+
+  const startOrder =
+    portfolio.items.reduce((max, it) => Math.max(max, it.order), -1) + 1;
+  const appended = newItems.map((it, i) => ({ ...it, order: startOrder + i }));
+  portfolio.items = [...portfolio.items, ...appended];
+
+  await savePortfolio(portfolio);
+  return portfolio;
 }
 
 /** 진단용: 현재 저장 모드 문자열. */

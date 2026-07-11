@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
+  <defs>
+    <linearGradient id="st" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef1f4"/><stop offset="1" stop-color="#cfd6dd"/></linearGradient>
+  </defs>
+  <rect width="1000" height="1250" fill="#dfe4e8"/>
+  <ellipse cx="500" cy="1020" rx="240" ry="40" fill="#b7c0c8"/>
+  <g stroke="#8a97a1" stroke-width="4">
+    <ellipse cx="500" cy="900" rx="200" ry="70" fill="#a9b4bd"/>
+    <ellipse cx="500" cy="760" rx="160" ry="60" fill="#c2ccd4"/>
+    <ellipse cx="500" cy="640" rx="120" ry="50" fill="#9aa6b0"/>
+    <ellipse cx="500" cy="540" rx="86" ry="40" fill="#d3dbe1"/>
+    <ellipse cx="500" cy="470" rx="54" ry="28" fill="#8994a0"/>
+  </g>
+  <path d="M360 470 q140 -80 280 0" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="6"/>
+  <text x="120" y="1150" font-family="Georgia, serif" font-size="42" fill="#2f3a42">Balance — 돌 오브제</text>
+</svg>
