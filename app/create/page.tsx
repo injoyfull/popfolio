@@ -102,7 +102,7 @@ export default function CreatePage() {
     e.preventDefault();
     setError(null);
     if (!name.trim()) {
-      setError("이름(또는 스튜디오 이름)을 적어주세요.");
+      setError("아이 이름(또는 전시명)을 적어주세요.");
       return;
     }
     setSubmitting(true);
@@ -140,7 +140,7 @@ export default function CreatePage() {
         <Link href="/" className="font-bold tracking-tight">
           Popfolio
         </Link>
-        <span className="text-sm text-neutral-400">내 작업 아카이브 만들기</span>
+        <span className="text-sm text-neutral-400">우리 아이 전시 만들기</span>
       </header>
 
       <form
@@ -148,7 +148,7 @@ export default function CreatePage() {
         className="mx-auto max-w-2xl px-6 py-10 sm:py-14"
       >
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          작업 몇 개랑, 몇 마디만.
+          작품 몇 개랑, 몇 마디만.
         </h1>
         <p className="mt-2 text-neutral-500">
           나머지 근사하게 세우는 건 Popfolio가 알아서 할게요.
@@ -156,11 +156,11 @@ export default function CreatePage() {
 
         {/* 기본 정보 */}
         <section className="mt-10 space-y-6">
-          <Field label="이름 · 스튜디오" required>
+          <Field label="아이 이름 · 전시명" required>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="예: 이도윤 / Studio Yeeun"
+              placeholder="예: 이도윤 / 도윤이의 작업실"
               className="pf-input"
             />
           </Field>
@@ -169,17 +169,17 @@ export default function CreatePage() {
             <input
               value={tagline}
               onChange={(e) => setTagline(e.target.value)}
-              placeholder="예: 그리고, 만들고, 쌓아가는 작업들"
+              placeholder="예: 일곱 살, 매일 그리고 만드는 중"
               className="pf-input"
             />
           </Field>
 
-          <Field label="뭐 하는 사람인지 (짧은 소개)">
+          <Field label="아이 소개 (몇 살, 뭘 좋아하는지)">
             <textarea
               value={about}
               onChange={(e) => setAbout(e.target.value)}
               rows={4}
-              placeholder="예: 안녕하세요, 일곱 살 도윤이의 작업 아카이브예요. 그림과 만들기를 좋아해요."
+              placeholder="예: 안녕하세요, 일곱 살 도윤이의 작품 전시예요. 그림과 만들기를 좋아해요."
               className="pf-input resize-y"
             />
           </Field>
@@ -223,7 +223,7 @@ export default function CreatePage() {
         <section className="mt-10">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-neutral-700">
-              작업 ({drafts.length})
+              작품 ({drafts.length})
             </p>
             <button
               type="button"
@@ -258,7 +258,7 @@ export default function CreatePage() {
             >
               <span className="text-3xl">＋</span>
               <span className="mt-2 text-sm">
-                {preparing ? "이미지 처리 중…" : "작업 사진을 올려보세요"}
+                {preparing ? "이미지 처리 중…" : "아이 작품 사진을 올려보세요"}
               </span>
             </button>
           ) : (
@@ -278,14 +278,14 @@ export default function CreatePage() {
                     <input
                       value={d.category}
                       onChange={(e) => patch(d.key, "category", e.target.value)}
-                      placeholder="카테고리 (예: 드로잉 · 만들기 · 사진)"
+                      placeholder="카테고리 (예: 그림 · 만들기 · 사진)"
                       list="pf-cats"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm font-medium outline-none focus:border-neutral-500"
                     />
                     <input
                       value={d.caption}
                       onChange={(e) => patch(d.key, "caption", e.target.value)}
-                      placeholder="이 작업 설명 (선택)"
+                      placeholder="이 작품 설명 (선택)"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
                     />
                     <div className="flex items-center gap-1 text-neutral-400">
@@ -335,7 +335,7 @@ export default function CreatePage() {
             disabled={submitting || preparing}
             className="rounded-xl bg-neutral-900 px-6 py-3 font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
           >
-            {submitting ? "세우는 중…" : "내 아카이브 세우기 →"}
+            {submitting ? "세우는 중…" : "우리 아이 전시 세우기 →"}
           </button>
           <Link
             href="/p/sample"
