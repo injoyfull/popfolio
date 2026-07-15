@@ -160,7 +160,7 @@ export default function CreatePage() {
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="예: 이도윤 / 도윤이의 작업실"
+              placeholder="예: 워니 / 워니의 작업실"
               className="pf-input"
             />
           </Field>
@@ -179,7 +179,7 @@ export default function CreatePage() {
               value={about}
               onChange={(e) => setAbout(e.target.value)}
               rows={4}
-              placeholder="예: 안녕하세요, 일곱 살 도윤이의 작품 전시예요. 그림과 만들기를 좋아해요."
+              placeholder="예: 안녕하세요, 일곱 살 워니의 작품 전시예요. 그림과 만들기를 좋아해요."
               className="pf-input resize-y"
             />
           </Field>
