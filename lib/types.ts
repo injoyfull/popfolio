@@ -23,8 +23,10 @@ export interface Portfolio {
   id: string;
   createdAt: string;
   brand: {
-    /** 브랜드/작가 이름 */
+    /** 전시명 — 결과 페이지의 큰 타이틀 */
     name: string;
+    /** 아이 이름(작가). 전시명과 별개, 없을 수 있음 */
+    childName?: string;
     /** 한 줄 소개 · 컨셉 */
     tagline: string;
     /** 뭐 하는 사람인지 (짧은 소개) */

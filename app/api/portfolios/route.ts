@@ -18,11 +18,12 @@ export async function POST(request: Request) {
   }
 
   const name = String(form.get("name") ?? "").trim();
+  const childName = String(form.get("childName") ?? "").trim();
   const tagline = String(form.get("tagline") ?? "").trim();
   const about = String(form.get("about") ?? "").trim();
 
   if (!name) {
-    return Response.json({ error: "이름은 필요해요." }, { status: 400 });
+    return Response.json({ error: "전시명은 필요해요." }, { status: 400 });
   }
 
   const moodRaw = String(form.get("mood") ?? "");
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
   const portfolio: Portfolio = {
     id,
     createdAt: new Date().toISOString(),
-    brand: { name, tagline, about },
+    brand: { name, childName: childName || undefined, tagline, about },
     mood,
     items,
     editKey,

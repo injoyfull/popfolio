@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import {
-  Noto_Sans_KR,
-  Nanum_Myeongjo,
-  Black_Han_Sans,
-  Space_Grotesk,
-} from "next/font/google";
+import { Noto_Sans_KR, Nanum_Myeongjo, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-// 본문 · 기본 산세리프 (한글 포함)
+// 본문 + 디스플레이 · 기본 산세리프 (한글·라틴 지원, 다국어 확장 대비)
+// 800 웨이트로 제목을 굵되 '초굵음(Black Han Sans)'보다 가독성 있게.
 const notoSansKr = Noto_Sans_KR({
   variable: "--font-noto",
   subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
+  weight: ["400", "500", "700", "800", "900"],
   display: "swap",
 });
 
@@ -20,14 +16,6 @@ const nanumMyeongjo = Nanum_Myeongjo({
   variable: "--font-myeongjo",
   subsets: ["latin"],
   weight: ["400", "700", "800"],
-  display: "swap",
-});
-
-// 비비드 무드 디스플레이 (굵은 한글)
-const blackHanSans = Black_Han_Sans({
-  variable: "--font-blackhan",
-  subsets: ["latin"],
-  weight: "400",
   display: "swap",
 });
 
@@ -71,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${notoSansKr.variable} ${nanumMyeongjo.variable} ${blackHanSans.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${notoSansKr.variable} ${nanumMyeongjo.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>

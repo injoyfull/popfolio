@@ -35,6 +35,12 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
           {brand.name}
         </h1>
 
+        {brand.childName && (
+          <p className="mt-3 text-sm font-medium tracking-[0.15em] text-[var(--pf-ink-soft)]">
+            작가 · {brand.childName}
+          </p>
+        )}
+
         {brand.tagline && (
           <p className="mt-4 max-w-[34ch] text-lg font-medium leading-snug text-[var(--pf-ink)] sm:text-2xl">
             {brand.tagline}

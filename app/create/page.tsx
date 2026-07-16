@@ -22,7 +22,8 @@ export default function CreatePage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState(""); // 전시명 (큰 타이틀)
+  const [childName, setChildName] = useState(""); // 아이 이름 (작가)
   const [tagline, setTagline] = useState("");
   const [about, setAbout] = useState("");
   const [mood, setMood] = useState<MoodId>(DEFAULT_MOOD);
@@ -102,13 +103,14 @@ export default function CreatePage() {
     e.preventDefault();
     setError(null);
     if (!name.trim()) {
-      setError("아이 이름(또는 전시명)을 적어주세요.");
+      setError("전시명을 적어주세요.");
       return;
     }
     setSubmitting(true);
     try {
       const fd = new FormData();
       fd.append("name", name.trim());
+      fd.append("childName", childName.trim());
       fd.append("tagline", tagline.trim());
       fd.append("about", about.trim());
       fd.append("mood", mood);
@@ -156,13 +158,25 @@ export default function CreatePage() {
 
         {/* 기본 정보 */}
         <section className="mt-10 space-y-6">
-          <Field label="아이 이름 · 전시명" required>
+          <Field label="아이 이름">
+            <input
+              value={childName}
+              onChange={(e) => setChildName(e.target.value)}
+              placeholder="예: 워니"
+              className="pf-input"
+            />
+          </Field>
+
+          <Field label="전시명" required>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="예: 워니 / 워니의 작업실"
+              placeholder="예: 워니의 아트룸"
               className="pf-input"
             />
+            <span className="mt-1.5 block text-xs text-neutral-400">
+              전시 페이지 맨 위에 큰 제목으로 걸려요.
+            </span>
           </Field>
 
           <Field label="한 줄 소개 · 컨셉">

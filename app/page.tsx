@@ -10,7 +10,7 @@ const ACCENT = "#FF4A24";
 const YELLOW = "#FDE24A";
 const LINE = "#E7E0D2";
 
-const display = "var(--font-blackhan), var(--font-noto), sans-serif";
+const display = "var(--font-noto), system-ui, sans-serif";
 const grotesk = "var(--font-grotesk), var(--font-noto), sans-serif";
 
 export default function Home() {
@@ -57,7 +57,7 @@ export default function Home() {
 
             <h1
               className="mt-6 text-5xl leading-[1.05] tracking-tight sm:text-6xl"
-              style={{ fontFamily: display }}
+              style={{ fontFamily: display, fontWeight: 800 }}
             >
               우리 아이 첫 개인전,
               <br />
@@ -187,7 +187,7 @@ export default function Home() {
             </span>
             <p
               className="mt-3 text-3xl leading-none"
-              style={{ fontFamily: display }}
+              style={{ fontFamily: display, fontWeight: 800 }}
             >
               워니의 작업실
             </p>
@@ -226,7 +226,7 @@ export default function Home() {
             </span>
             <h2
               className="mt-4 text-4xl leading-tight tracking-tight sm:text-5xl"
-              style={{ fontFamily: display }}
+              style={{ fontFamily: display, fontWeight: 800 }}
             >
               진짜 전시장처럼,
               <br />
@@ -309,7 +309,7 @@ export default function Home() {
         <div className="mx-auto max-w-4xl px-6 py-24 text-center sm:px-8">
           <h2
             className="text-4xl leading-tight tracking-tight sm:text-6xl"
-            style={{ fontFamily: display }}
+            style={{ fontFamily: display, fontWeight: 800 }}
           >
             우리 아이 첫 개인전,
             <br />
@@ -425,7 +425,7 @@ function ExhibitionMock() {
           링크 공유
         </span>
       </div>
-      <p className="mt-4 text-4xl leading-none" style={{ fontFamily: display }}>
+      <p className="mt-4 text-4xl leading-none" style={{ fontFamily: display, fontWeight: 800 }}>
         워니의 작업실
       </p>
       <p className="mt-2 text-sm opacity-70">일곱 살, 매일 그리고 만드는 중</p>

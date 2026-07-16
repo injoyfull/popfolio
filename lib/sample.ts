@@ -10,6 +10,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
   createdAt: "2026-07-10T00:00:00.000Z",
   brand: {
     name: "워니의 작업실",
+    childName: "워니",
     tagline: "일곱 살, 매일 그리고 만드는 중",
     about:
       "일곱 살 워니가 그리고 만든 것들을 모았어요. 서랍 속에만 두기 아까운 그림들을 여기 전시로 걸어둡니다. 새 작품이 생길 때마다 한 점씩 늘어나요.",

@@ -47,7 +47,6 @@ const F = {
   noto: "var(--font-noto), system-ui, sans-serif",
   notoBold: "var(--font-noto), system-ui, sans-serif",
   myeongjo: "var(--font-myeongjo), var(--font-noto), serif",
-  blackhan: "var(--font-blackhan), var(--font-noto), sans-serif",
   grotesk: "var(--font-grotesk), var(--font-noto), sans-serif",
 };
 
@@ -124,10 +123,10 @@ export const MOODS: Record<MoodId, Mood> = {
       accent: "#FF4A24",
       accentInk: "#FFFFFF",
       line: "rgba(20,16,9,0.18)",
-      displayFont: F.blackhan,
+      displayFont: F.noto,
       bodyFont: F.noto,
       radius: "2px",
-      heroWeight: 400,
+      heroWeight: 800,
       heroTracking: "-0.01em",
       displayUppercase: false,
     },
