@@ -65,7 +65,7 @@ export default function Home() {
             </h1>
 
             <p
-              className="mt-6 max-w-[46ch] text-lg leading-relaxed"
+              className="mt-6 max-w-[46ch] text-balance break-keep text-lg leading-relaxed"
               style={{ color: INK_SOFT }}
             >
               사진첩에 묻어두지 마세요. 아이 작품 사진 몇 장과 이름만 넣으면 —
@@ -232,7 +232,7 @@ export default function Home() {
               <br />
               스포트라이트가 켜져요.
             </h2>
-            <p className="mt-6 max-w-[42ch] text-lg leading-relaxed text-white/70">
+            <p className="mt-6 max-w-[42ch] text-balance break-keep text-lg leading-relaxed text-white/70">
               썸네일을 누르면 어두운 전시장에 작품이 중앙으로 떠오르고, 벽 라벨처럼
               제목이 붙어요. ◀▶로 넘기며 우리 아이 전시를 한 바퀴 — “내 아이가
               작가가 된” 그 느낌.
@@ -295,7 +295,10 @@ export default function Home() {
               </div>
               <div className="px-5 py-4" style={{ background: "#fff" }}>
                 <p className="text-base font-bold">{m.label}</p>
-                <p className="mt-1 text-sm" style={{ color: INK_SOFT }}>
+                <p
+                  className="mt-1 text-pretty break-keep text-sm"
+                  style={{ color: INK_SOFT }}
+                >
                   {m.description}
                 </p>
               </div>
@@ -315,7 +318,7 @@ export default function Home() {
             <br />
             지금 열어주세요.
           </h2>
-          <p className="mx-auto mt-6 max-w-[40ch] text-lg text-white/85">
+          <p className="mx-auto mt-6 max-w-[40ch] text-balance break-keep text-lg text-white/85">
             사진 몇 장이면 충분해요. 냉장고 문에 붙였다 떼는 그림을, 온 가족이
             찾아오는 전시로.
           </p>
@@ -369,7 +372,10 @@ function SectionHead({
       >
         {title}
       </h2>
-      <p className="mt-4 text-lg leading-relaxed" style={{ color: INK_SOFT }}>
+      <p
+        className="mt-4 text-balance break-keep text-lg leading-relaxed"
+        style={{ color: INK_SOFT }}
+      >
         {sub}
       </p>
     </div>
@@ -400,7 +406,10 @@ function StepCard({
       </span>
       <div className="mt-4 text-3xl">{emoji}</div>
       <p className="mt-3 text-xl font-bold">{title}</p>
-      <p className="mt-2 text-[15px] leading-relaxed" style={{ color: INK_SOFT }}>
+      <p
+        className="mt-2 text-pretty break-keep text-[15px] leading-relaxed"
+        style={{ color: INK_SOFT }}
+      >
         {body}
       </p>
     </div>
