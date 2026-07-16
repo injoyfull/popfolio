@@ -1,5 +1,6 @@
-// 폼(multipart)의 image/caption/category 묶음을 받아 이미지를 저장하고
+// 폼(multipart)의 image/title/description/category 묶음을 받아 이미지를 저장하고
 // WorkItem 배열을 만든다. 생성(POST)·추가(append) 라우트가 공유한다.
+// caption은 구 클라이언트 호환용으로만 읽는다.
 
 import { saveImage } from "./storage";
 import type { WorkItem } from "./types";
@@ -33,7 +34,9 @@ export async function buildWorkItems(
   prefix = "",
 ): Promise<WorkItem[]> {
   const images = form.getAll("image").filter((v): v is File => v instanceof File);
-  const captions = form.getAll("caption").map((v) => String(v));
+  const titles = form.getAll("title").map((v) => String(v));
+  const descriptions = form.getAll("description").map((v) => String(v));
+  const captions = form.getAll("caption").map((v) => String(v)); // 구 클라이언트 호환
   const categories = form.getAll("category").map((v) => String(v));
 
   const items: WorkItem[] = [];
@@ -46,7 +49,8 @@ export async function buildWorkItems(
     items.push({
       id: `im_${prefix}${i + 1}`,
       image,
-      caption: (captions[i] ?? "").trim() || undefined,
+      title: ((titles[i] ?? "").trim() || (captions[i] ?? "").trim()) || undefined,
+      description: (descriptions[i] ?? "").trim() || undefined,
       category: (categories[i] ?? "").trim() || undefined,
       order: i,
     });

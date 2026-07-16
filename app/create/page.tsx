@@ -12,7 +12,8 @@ interface Draft {
   blob: Blob;
   name: string;
   url: string;
-  caption: string;
+  title: string;
+  description: string;
   category: string;
 }
 
@@ -61,7 +62,8 @@ export default function CreatePage() {
             blob: p.blob,
             name: p.name,
             url: p.previewUrl,
-            caption: "",
+            title: "",
+            description: "",
             category: "",
           } satisfies Draft;
         }),
@@ -93,7 +95,11 @@ export default function CreatePage() {
     });
   }
 
-  function patch(key: string, field: "caption" | "category", value: string) {
+  function patch(
+    key: string,
+    field: "title" | "description" | "category",
+    value: string,
+  ) {
     setDrafts((prev) =>
       prev.map((d) => (d.key === key ? { ...d, [field]: value } : d)),
     );
@@ -116,7 +122,8 @@ export default function CreatePage() {
       fd.append("mood", mood);
       for (const d of drafts) {
         fd.append("image", d.blob, d.name);
-        fd.append("caption", d.caption);
+        fd.append("title", d.title);
+        fd.append("description", d.description);
         fd.append("category", d.category);
       }
       const res = await fetch("/api/portfolios", {
@@ -290,16 +297,24 @@ export default function CreatePage() {
                   />
                   <div className="flex flex-1 flex-col gap-2">
                     <input
+                      value={d.title}
+                      onChange={(e) => patch(d.key, "title", e.target.value)}
+                      placeholder="작품 제목 (예: 오늘의 낙서)"
+                      className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm font-semibold outline-none focus:border-neutral-500"
+                    />
+                    <input
+                      value={d.description}
+                      onChange={(e) =>
+                        patch(d.key, "description", e.target.value)
+                      }
+                      placeholder="짧은 소개 (예: 매일 한 장씩 그려요)"
+                      className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
+                    />
+                    <input
                       value={d.category}
                       onChange={(e) => patch(d.key, "category", e.target.value)}
                       placeholder="카테고리 (예: 그림 · 만들기 · 사진)"
                       list="pf-cats"
-                      className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm font-medium outline-none focus:border-neutral-500"
-                    />
-                    <input
-                      value={d.caption}
-                      onChange={(e) => patch(d.key, "caption", e.target.value)}
-                      placeholder="이 작품 설명 (선택)"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
                     />
                     <div className="flex items-center gap-1 text-neutral-400">

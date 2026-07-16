@@ -1,10 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DEFAULT_CATEGORY, type WorkItem } from "@/lib/types";
+import { DEFAULT_CATEGORY, workTitle, type WorkItem } from "@/lib/types";
 
-// 카테고리로 묶인 압축 파노라마 갤러리 + 전시 라이트박스.
-// 썸네일을 사진첩처럼 쫙 깔고, 클릭하면 어두운 배경에 작품이 스포트라이트로 뜬다.
+// 에디토리얼 전시 갤러리.
+// 잡지 지면처럼 — 작품을 크롭하지 않고 '누끼'로 띄우고(그림자), 아래에 제목 + 짧은 소개.
+// 그리드 사이사이에 카테고리 큐레이션 블록을 끼워 리듬을 만든다. (목록이 아니라 전시로 읽히게)
+// 작품을 누르면 어두운 전시장 라이트박스에서 상세를 본다.
+
+type Cell =
+  | { kind: "note"; key: string; category: string; count: number; index: number }
+  | { kind: "work"; key: string; work: WorkItem };
+
 export default function Gallery({ works }: { works: WorkItem[] }) {
   // 카테고리별 그룹핑 (등장 순서 유지)
   const groups = useMemo(() => {
@@ -29,6 +36,22 @@ export default function Gallery({ works }: { works: WorkItem[] }) {
     flat.forEach((w, i) => m.set(w.id, i));
     return m;
   }, [flat]);
+
+  // 큐레이션 블록 + 작품을 한 흐름으로 배치
+  const cells = useMemo<Cell[]>(() => {
+    const out: Cell[] = [];
+    groups.forEach((g, gi) => {
+      out.push({
+        kind: "note",
+        key: `note-${g.name}`,
+        category: g.name,
+        count: g.items.length,
+        index: gi + 1,
+      });
+      for (const w of g.items) out.push({ kind: "work", key: w.id, work: w });
+    });
+    return out;
+  }, [groups]);
 
   const [open, setOpen] = useState<number | null>(null);
   const current = open === null ? null : flat[open];
@@ -63,52 +86,74 @@ export default function Gallery({ works }: { works: WorkItem[] }) {
 
   return (
     <section className="px-6 py-14 sm:px-10 sm:py-20">
-      <div className="mb-10 flex items-end justify-between">
+      <div className="mb-12 flex items-end justify-between border-b border-[var(--pf-line)] pb-4">
         <h2 className="pf-display text-sm font-bold tracking-[0.3em]">
-          ARCHIVE
+          EXHIBITION
         </h2>
         <span className="text-sm text-[var(--pf-ink-soft)]">
           {flat.length}점 · {groups.length}개 묶음
         </span>
       </div>
 
-      <div className="space-y-12">
-        {groups.map((g) => (
-          <div key={g.name}>
-            <div className="mb-4 flex items-baseline gap-3">
-              <h3 className="pf-display text-lg font-bold">{g.name}</h3>
-              <span className="text-xs text-[var(--pf-ink-soft)]">
-                {String(g.items.length).padStart(2, "0")}
-              </span>
-              <span className="h-px flex-1 bg-[var(--pf-line)]" />
-            </div>
+      <ul className="grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16">
+        {cells.map((c) =>
+          c.kind === "note" ? (
+            <li
+              key={c.key}
+              className="col-span-2 flex flex-col justify-center md:col-span-1"
+            >
+              <div className="border-y border-[var(--pf-line)] py-5">
+                <span className="text-xs font-medium tracking-[0.25em] text-[var(--pf-ink-soft)]">
+                  {String(c.index).padStart(2, "0")}
+                </span>
+                <h3 className="pf-display mt-2 break-keep text-2xl font-bold leading-tight sm:text-3xl">
+                  {c.category}
+                </h3>
+                <p className="mt-2 text-sm text-[var(--pf-ink-soft)]">
+                  작품 {c.count}점
+                </p>
+              </div>
+            </li>
+          ) : (
+            <li key={c.key}>
+              <button
+                type="button"
+                onClick={() => setOpen(indexById.get(c.work.id) ?? 0)}
+                className="group block w-full text-left"
+                aria-label={workTitle(c.work) ?? "작품 보기"}
+              >
+                {/* 작품 — 크롭 없이 누끼로 띄운다 */}
+                <span className="flex h-[190px] items-end justify-center sm:h-[250px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={c.work.image}
+                    alt={c.work.alt ?? workTitle(c.work) ?? ""}
+                    loading="lazy"
+                    className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:scale-[1.03]"
+                    style={{
+                      filter: "drop-shadow(0 16px 22px rgba(0,0,0,0.18))",
+                    }}
+                  />
+                </span>
 
-            {/* 파노라마: 압축 썸네일 사진첩 */}
-            <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-3 md:grid-cols-6">
-              {g.items.map((w) => (
-                <li key={w.id}>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(indexById.get(w.id) ?? 0)}
-                    className="pf-thumb group block w-full overflow-hidden rounded-[var(--pf-radius)] border border-[var(--pf-line)]"
-                    aria-label={w.caption ?? "작품 보기"}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={w.image}
-                      alt={w.alt ?? w.caption ?? ""}
-                      loading="lazy"
-                      className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+                {/* 벽 라벨 — 제목 + 짧은 소개 */}
+                <span className="mt-5 block border-t border-[var(--pf-line)] pt-3">
+                  <span className="block break-keep text-sm font-bold leading-snug">
+                    {workTitle(c.work) ?? "무제"}
+                  </span>
+                  {c.work.description && (
+                    <span className="mt-1 block break-keep text-xs leading-relaxed text-[var(--pf-ink-soft)]">
+                      {c.work.description}
+                    </span>
+                  )}
+                </span>
+              </button>
+            </li>
+          ),
+        )}
+      </ul>
 
-      {/* 라이트박스 (전시) */}
+      {/* 라이트박스 (전시 상세) */}
       {current && (
         <div
           className="fixed inset-0 z-50 flex flex-col bg-black/92 backdrop-blur-sm"
@@ -140,13 +185,13 @@ export default function Gallery({ works }: { works: WorkItem[] }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={current.image}
-              alt={current.alt ?? current.caption ?? ""}
-              className="max-h-[70vh] max-w-full rounded object-contain shadow-2xl"
+              alt={current.alt ?? workTitle(current) ?? ""}
+              className="max-h-[64vh] max-w-full rounded object-contain shadow-2xl"
             />
             <NavBtn dir="next" onClick={next} />
           </div>
 
-          {/* 벽 라벨 */}
+          {/* 벽 라벨 — 카테고리 · 제목 · 소개 */}
           <div
             className="px-6 pb-10 pt-4 text-center"
             onClick={(e) => e.stopPropagation()}
@@ -154,9 +199,12 @@ export default function Gallery({ works }: { works: WorkItem[] }) {
             <p className="text-xs font-medium tracking-[0.25em] text-neutral-500">
               {(current.category?.trim() || DEFAULT_CATEGORY).toUpperCase()}
             </p>
-            {current.caption && (
-              <p className="mx-auto mt-2 max-w-[46ch] text-base text-neutral-100 sm:text-lg">
-                {current.caption}
+            <p className="mx-auto mt-2 max-w-[46ch] break-keep text-lg font-semibold text-neutral-100 sm:text-xl">
+              {workTitle(current) ?? "무제"}
+            </p>
+            {current.description && (
+              <p className="mx-auto mt-2 max-w-[52ch] text-balance break-keep text-sm leading-relaxed text-neutral-400">
+                {current.description}
               </p>
             )}
           </div>

@@ -62,7 +62,7 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
       {/* FOOTER */}
       <footer className="border-t border-[var(--pf-line)] px-6 py-14 sm:px-10 sm:py-20">
         <p className="pf-display text-xs font-medium tracking-[0.3em] text-[var(--pf-ink-soft)]">
-          작품은 버려져도, 경험은 쌓입니다
+          아이의 작품이, 걸리는 순간
         </p>
         <p className="pf-display mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
           {brand.name}

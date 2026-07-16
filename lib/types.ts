@@ -7,17 +7,26 @@ export interface WorkItem {
   id: string;
   /** public 경로 또는 저장된 이미지 경로 */
   image: string;
-  /** 이미지 대체 텍스트 (없으면 caption 사용) */
+  /** 이미지 대체 텍스트 (없으면 제목 사용) */
   alt?: string;
-  /** 작업 설명 (사용자 입력 그대로) */
+  /** 작품 제목 — 전시 라벨의 큰 줄 */
+  title?: string;
+  /** 짧은 소개 — 제목 아래 한두 줄 (사용자 입력 그대로) */
+  description?: string;
+  /** @deprecated 예전 단일 설명 필드. title이 없으면 제목으로 쓴다(구 데이터 호환). */
   caption?: string;
-  /** 카테고리(경험 묶음) 이름. 없으면 기본 묶음으로 취급 */
+  /** 카테고리(작품 묶음) 이름. 없으면 기본 묶음으로 취급 */
   category?: string;
   order: number;
 }
 
-/** 카테고리 없는 작업을 담는 기본 묶음 라벨 */
-export const DEFAULT_CATEGORY = "작업";
+/** 카테고리 없는 작품을 담는 기본 묶음 라벨 */
+export const DEFAULT_CATEGORY = "작품";
+
+/** 구 데이터 호환: title이 없으면 caption을 제목으로 쓴다. */
+export function workTitle(w: WorkItem): string | undefined {
+  return w.title?.trim() || w.caption?.trim() || undefined;
+}
 
 export interface Portfolio {
   id: string;
