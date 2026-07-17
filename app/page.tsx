@@ -276,7 +276,7 @@ export default function Home() {
           title="분위기 4가지, 골라서 다시."
           sub="한 번의 클릭으로 전시 전체가 다른 무드로 리스킨돼요. 우리 아이에게 맞는 톤으로."
         />
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {MOOD_LIST.map((m) => (
             <div
               key={m.id}

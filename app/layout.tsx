@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR, Nanum_Myeongjo, Space_Grotesk } from "next/font/google";
+import {
+  Noto_Sans_KR,
+  Nanum_Myeongjo,
+  Space_Grotesk,
+  Jua,
+} from "next/font/google";
 import "./globals.css";
 
 // 본문 + 디스플레이 · 기본 산세리프 (한글·라틴 지원, 다국어 확장 대비)
@@ -24,6 +29,14 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-grotesk",
   subsets: ["latin"],
   weight: ["500", "700"],
+  display: "swap",
+});
+
+// 팝 무드 디스플레이 — 동글동글 청키(한글 라운드)
+const jua = Jua({
+  variable: "--font-jua",
+  subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
@@ -59,7 +72,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${notoSansKr.variable} ${nanumMyeongjo.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${notoSansKr.variable} ${nanumMyeongjo.variable} ${spaceGrotesk.variable} ${jua.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>

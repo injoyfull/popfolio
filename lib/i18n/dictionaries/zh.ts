@@ -64,6 +64,7 @@ const zh: Dictionary = {
       minimal: { label: "极简", desc: "留白与纤细字体。安静而清晰。" },
       vivid: { label: "鲜明", desc: "明快的色块与大字体。时髦的快闪气质。" },
       collage: { label: "拼贴", desc: "像剪纸拼贴的快闪风格。柔和色块与纸质纹理。" },
+      pop: { label: "波普", desc: "圆润粗体字＋对话气泡＋闪光。活泼跳跃的品牌感。" },
     },
   },
   finalCta: {

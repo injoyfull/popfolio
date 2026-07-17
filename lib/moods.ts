@@ -48,6 +48,7 @@ const F = {
   notoBold: "var(--font-noto), system-ui, sans-serif",
   myeongjo: "var(--font-myeongjo), var(--font-noto), serif",
   grotesk: "var(--font-grotesk), var(--font-noto), sans-serif",
+  jua: "var(--font-jua), var(--font-noto), sans-serif",
 };
 
 export const MOODS: Record<MoodId, Mood> = {
@@ -111,6 +112,26 @@ export const MOODS: Record<MoodId, Mood> = {
       displayUppercase: false,
     },
   },
+  pop: {
+    id: "pop",
+    label: "팝",
+    description: "동글동글 청키 타이포 + 스피치버블 + 스파클. 밝고 통통 튀는 브랜드.",
+    tokens: {
+      bg: "#DCD6F7",
+      surface: "#FFFFFF",
+      ink: "#1C1B22",
+      inkSoft: "#6C6980",
+      accent: "#17B26A",
+      accentInk: "#FFFFFF",
+      line: "rgba(28,27,34,0.12)",
+      displayFont: F.jua,
+      bodyFont: F.noto,
+      radius: "24px",
+      heroWeight: 400,
+      heroTracking: "0em",
+      displayUppercase: false,
+    },
+  },
   collage: {
     id: "collage",
     label: "콜라주",
@@ -159,6 +180,7 @@ export const MOOD_LIST: Mood[] = [
   MOODS.minimal,
   MOODS.vivid,
   MOODS.collage,
+  MOODS.pop,
 ];
 
 export const DEFAULT_MOOD: MoodId = "modern";

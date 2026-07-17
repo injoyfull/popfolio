@@ -63,6 +63,7 @@ const en: Dictionary = {
       minimal: { label: "Minimal", desc: "White space and thin type. Quiet but crisp." },
       vivid: { label: "Vivid", desc: "Bold color blocks and big type. A trendy pop-up mood." },
       collage: { label: "Collage", desc: "A cut-paper pop-up. Pastel cutouts and paper grain." },
+      pop: { label: "Pop", desc: "Chunky rounded type, speech bubbles, and sparkles. A bouncy brand." },
     },
   },
   finalCta: {
