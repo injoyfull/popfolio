@@ -111,6 +111,26 @@ export const MOODS: Record<MoodId, Mood> = {
       displayUppercase: false,
     },
   },
+  collage: {
+    id: "collage",
+    label: "콜라주",
+    description: "색종이 오려 붙인 듯한 팝업. 파스텔 컷아웃과 종이 질감.",
+    tokens: {
+      bg: "#F5F1E6",
+      surface: "#FFFFFF",
+      ink: "#2B2A28",
+      inkSoft: "#7A7568",
+      accent: "#EE7752",
+      accentInk: "#FFFFFF",
+      line: "rgba(43,42,40,0.14)",
+      displayFont: F.noto,
+      bodyFont: F.noto,
+      radius: "14px",
+      heroWeight: 900,
+      heroTracking: "-0.01em",
+      displayUppercase: false,
+    },
+  },
   vivid: {
     id: "vivid",
     label: "비비드",
@@ -138,6 +158,7 @@ export const MOOD_LIST: Mood[] = [
   MOODS.warm,
   MOODS.minimal,
   MOODS.vivid,
+  MOODS.collage,
 ];
 
 export const DEFAULT_MOOD: MoodId = "modern";

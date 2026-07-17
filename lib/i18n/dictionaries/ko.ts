@@ -61,6 +61,7 @@ const ko = {
       warm: { label: "따뜻", desc: "크림빛 배경과 테라코타. 포근한 부티크 감성." },
       minimal: { label: "미니멀", desc: "흰 여백과 얇은 타이포. 조용하지만 또렷한 무드." },
       vivid: { label: "비비드", desc: "선명한 색 블록과 큼직한 타이포. 트렌디한 팝업 무드." },
+      collage: { label: "콜라주", desc: "색종이 오려 붙인 듯한 팝업. 파스텔 컷아웃과 종이 질감." },
     },
   },
   finalCta: {

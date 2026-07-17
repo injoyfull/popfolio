@@ -62,6 +62,7 @@ const es: Dictionary = {
       warm: { label: "Cálido", desc: "Fondo crema con terracota. Ambiente acogedor de boutique." },
       minimal: { label: "Minimal", desc: "Espacio en blanco y tipografía fina. Sobrio pero nítido." },
       vivid: { label: "Vívido", desc: "Bloques de color intensos y tipografía grande. Un mood pop-up con onda." },
+      collage: { label: "Collage", desc: "Un pop-up de papel recortado. Cortes pastel y textura de papel." },
     },
   },
   finalCta: {

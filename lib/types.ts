@@ -1,7 +1,7 @@
 // Popfolio 핵심 데이터 모델 (Plan.md §3)
 // 로그인 없는 MVP — 서버 파일로 저장되는 포트폴리오 한 건의 형태.
 
-export type MoodId = "modern" | "warm" | "minimal" | "vivid";
+export type MoodId = "modern" | "warm" | "minimal" | "vivid" | "collage";
 
 export interface WorkItem {
   id: string;

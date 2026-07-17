@@ -3,6 +3,8 @@ import type { Portfolio } from "@/lib/types";
 import { moodToCssVars } from "@/lib/moods";
 import ShareButton from "./ShareButton";
 import Gallery from "./Gallery";
+import CutoutText from "./CutoutText";
+import PaperStickers, { PaperGrain } from "./PaperStickers";
 
 // 결과 페이지 — "내 작업 아카이브" (Plan.md §9).
 // 압축된 헤더 + 카테고리 파노라마 갤러리(+전시 라이트박스).
@@ -12,9 +14,12 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
   const year = new Date(createdAt).getFullYear();
   const works = [...items].sort((a, b) => a.order - b.order);
   const style = moodToCssVars(portfolio.mood) as CSSProperties;
+  // 콜라주 공간 — 종이 스티커 · 종이 질감 · 컷아웃 타이틀 (Plan.md §10 공간 시스템의 첫 조각)
+  const isCollage = portfolio.mood === "collage";
 
   return (
-    <main className="pf-root min-h-screen" style={style}>
+    <main className="pf-root relative min-h-screen" style={style}>
+      {isCollage && <PaperGrain />}
       {/* 상단 바 */}
       <header className="flex items-center justify-between px-6 py-5 sm:px-10">
         <span className="pf-display text-sm font-bold tracking-wide">
@@ -24,31 +29,43 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
       </header>
 
       {/* HERO (압축) */}
-      <section className="px-6 pb-8 pt-8 sm:px-10 sm:pt-12">
-        <div className="flex items-center gap-3 text-xs font-medium tracking-[0.3em] text-[var(--pf-ink-soft)]">
+      <section
+        className={`px-6 pt-8 sm:px-10 sm:pt-12 ${
+          isCollage
+            ? "relative overflow-hidden pb-32 sm:pb-8" // 모바일 하단에 스티커 띠 자리
+            : "pb-8"
+        }`}
+      >
+        {isCollage && <PaperStickers />}
+
+        <div className="relative z-10 flex items-center gap-3 text-xs font-medium tracking-[0.3em] text-[var(--pf-ink-soft)]">
           <span className="pf-display">ARCHIVE</span>
           <span className="h-px flex-1 bg-[var(--pf-line)]" />
           <span>{year}</span>
         </div>
 
-        <h1 className="pf-display mt-6 text-4xl font-bold leading-[1.02] tracking-tight sm:text-6xl">
-          {brand.name}
+        <h1 className="pf-display relative z-10 mt-6 text-4xl font-bold leading-[1.02] tracking-tight sm:text-6xl">
+          {isCollage ? (
+            <CutoutText text={brand.name} className="font-black" />
+          ) : (
+            brand.name
+          )}
         </h1>
 
         {brand.childName && (
-          <p className="mt-3 text-sm font-medium tracking-[0.15em] text-[var(--pf-ink-soft)]">
+          <p className="relative z-10 mt-3 text-sm font-medium tracking-[0.15em] text-[var(--pf-ink-soft)]">
             작가 · {brand.childName}
           </p>
         )}
 
         {brand.tagline && (
-          <p className="mt-4 max-w-[34ch] text-lg font-medium leading-snug text-[var(--pf-ink)] sm:text-2xl">
+          <p className="relative z-10 mt-4 max-w-[34ch] break-keep text-lg font-medium leading-snug text-[var(--pf-ink)] sm:text-2xl">
             {brand.tagline}
           </p>
         )}
 
         {brand.about && (
-          <p className="mt-5 max-w-[52ch] text-sm leading-relaxed text-[var(--pf-ink-soft)] sm:text-base">
+          <p className="relative z-10 mt-5 max-w-[52ch] break-keep text-sm leading-relaxed text-[var(--pf-ink-soft)] sm:text-base">
             {brand.about}
           </p>
         )}
