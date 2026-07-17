@@ -4,8 +4,9 @@ import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { MOOD_LIST, DEFAULT_MOOD } from "@/lib/moods";
+import { STYLE_LIST, COMING_STYLES, DEFAULT_STYLE } from "@/lib/styles";
 import { prepareImage } from "@/lib/image-client";
-import type { MoodId } from "@/lib/types";
+import type { MoodId, StyleId } from "@/lib/types";
 
 interface Draft {
   key: string;
@@ -28,6 +29,7 @@ export default function CreatePage() {
   const [tagline, setTagline] = useState("");
   const [about, setAbout] = useState("");
   const [mood, setMood] = useState<MoodId>(DEFAULT_MOOD);
+  const [styleId, setStyleId] = useState<StyleId>(DEFAULT_STYLE);
   const [drafts, setDrafts] = useState<Draft[]>([]);
 
   const [preparing, setPreparing] = useState(false);
@@ -120,6 +122,7 @@ export default function CreatePage() {
       fd.append("tagline", tagline.trim());
       fd.append("about", about.trim());
       fd.append("mood", mood);
+      fd.append("style", styleId);
       for (const d of drafts) {
         fd.append("image", d.blob, d.name);
         fd.append("title", d.title);
@@ -206,9 +209,58 @@ export default function CreatePage() {
           </Field>
         </section>
 
-        {/* 무드 */}
+        {/* 스타일(레이아웃) — 작품이 한 화면에 어떻게 담기는가 */}
         <section className="mt-10">
-          <p className="text-sm font-medium text-neutral-700">분위기</p>
+          <p className="text-sm font-medium text-neutral-700">
+            스타일 · Style
+          </p>
+          <p className="mt-1 text-sm text-neutral-400">
+            작품이 화면에 어떻게 담길지 골라요. 색감과 자유롭게 조합돼요.
+          </p>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {STYLE_LIST.map((s) => {
+              const selected = s.id === styleId;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setStyleId(s.id)}
+                  className={`rounded-xl border p-3 text-left transition ${
+                    selected
+                      ? "border-neutral-900 ring-2 ring-neutral-900"
+                      : "border-neutral-200 hover:border-neutral-400"
+                  }`}
+                >
+                  <span className="block text-sm font-bold">{s.ko}</span>
+                  <span className="block text-xs font-medium text-neutral-400">
+                    {s.en}
+                  </span>
+                  <span className="mt-1.5 block break-keep text-xs leading-snug text-neutral-500">
+                    {s.desc}
+                  </span>
+                </button>
+              );
+            })}
+            {COMING_STYLES.map((s) => (
+              <div
+                key={s.en}
+                className="rounded-xl border border-dashed border-neutral-200 p-3 opacity-55"
+              >
+                <span className="block text-sm font-bold">{s.ko}</span>
+                <span className="block text-xs font-medium text-neutral-400">
+                  {s.en}
+                </span>
+                <span className="mt-1.5 block text-xs text-neutral-400">
+                  준비 중 · Coming soon
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 색감(팔레트) */}
+        <section className="mt-10">
+          <p className="text-sm font-medium text-neutral-700">색감 · Color</p>
           <p className="mt-1 text-sm text-neutral-400">
             언제든 바꿀 수 있어요. 기본은 모던.
           </p>

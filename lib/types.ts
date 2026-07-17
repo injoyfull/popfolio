@@ -1,6 +1,7 @@
 // Popfolio 핵심 데이터 모델 (Plan.md §3)
 // 로그인 없는 MVP — 서버 파일로 저장되는 포트폴리오 한 건의 형태.
 
+// 색감(팔레트) 축 — 색·타입만 바꾼다. 레이아웃은 StyleId가 담당.
 export type MoodId =
   | "modern"
   | "warm"
@@ -8,6 +9,16 @@ export type MoodId =
   | "vivid"
   | "collage"
   | "pop";
+
+// 스타일(레이아웃) 축 — 작품이 한 화면에 "어떻게 담기는가".
+// 색감(MoodId)과 독립적으로 조합된다. (스타일 × 색감)
+export type StyleId =
+  | "gallery" // 원페이지 갤러리 (에디토리얼, 기본)
+  | "spotlight" // 이름 + 대표작 하나 + 더 보기
+  | "handwritten" // 손글씨 목록 (인벤토리)
+  | "feed" // 인스타 느낌 정사각 그리드
+  | "wall" // 스티커/테이프로 벽에 붙인 느낌
+  | "pile"; // 자유롭게 겹겹이 쌓임, 호버로 선택
 
 export interface WorkItem {
   id: string;
@@ -48,6 +59,8 @@ export interface Portfolio {
     about: string;
   };
   mood: MoodId;
+  /** 레이아웃 스타일. 없으면 gallery(구 데이터 호환) */
+  style?: StyleId;
   items: WorkItem[];
   /**
    * 비밀 편집키 — 로그인 없이 나중에 작품을 이어 올리기 위한 소유 증명.

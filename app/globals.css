@@ -63,6 +63,23 @@ body {
   }
 }
 
+/* ── 겹겹이(Pile) 스타일 ───────────────────────────
+   더미 위에 마우스가 오르면, 짚은 작품만 앞으로 떠오르고 나머지는 흐려진다. */
+.pf-pile-item {
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease,
+    z-index 0s;
+}
+.pf-pile:hover .pf-pile-item:not(:hover) {
+  opacity: 0.35;
+  filter: grayscale(35%);
+}
+.pf-pile .pf-pile-item:hover {
+  z-index: 40 !important;
+  opacity: 1;
+}
+
 /* 작업 이미지 호버 살짝 확대 */
 .pf-work-img {
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);

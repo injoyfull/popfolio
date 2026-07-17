@@ -4,6 +4,7 @@ import {
   Nanum_Myeongjo,
   Space_Grotesk,
   Jua,
+  Gaegu,
 } from "next/font/google";
 import "./globals.css";
 
@@ -40,6 +41,14 @@ const jua = Jua({
   display: "swap",
 });
 
+// 손글씨 스타일 — 아이가 직접 쓴 듯한 한글 손글씨
+const gaegu = Gaegu({
+  variable: "--font-gaegu",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://popfolio-two.vercel.app"),
   title: {
@@ -72,7 +81,7 @@ export default function RootLayout({
   return (
     <html
       lang="ko"
-      className={`${notoSansKr.variable} ${nanumMyeongjo.variable} ${spaceGrotesk.variable} ${jua.variable} h-full antialiased`}
+      className={`${notoSansKr.variable} ${nanumMyeongjo.variable} ${spaceGrotesk.variable} ${jua.variable} ${gaegu.variable} h-full antialiased`}
     >
       <body className="min-h-full">{children}</body>
     </html>

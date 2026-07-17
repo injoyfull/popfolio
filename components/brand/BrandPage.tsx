@@ -6,6 +6,11 @@ import Gallery from "./Gallery";
 import CutoutText from "./CutoutText";
 import PaperStickers, { PaperGrain } from "./PaperStickers";
 import PopDecor from "./PopDecor";
+import StyleSpotlight from "./styles/StyleSpotlight";
+import StyleHandwritten from "./styles/StyleHandwritten";
+import StyleFeed from "./styles/StyleFeed";
+import StyleWall from "./styles/StyleWall";
+import StylePile from "./styles/StylePile";
 
 // 결과 페이지 — "내 작업 아카이브" (Plan.md §9).
 // 압축된 헤더 + 카테고리 파노라마 갤러리(+전시 라이트박스).
@@ -15,9 +20,12 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
   const year = new Date(createdAt).getFullYear();
   const works = [...items].sort((a, b) => a.order - b.order);
   const style = moodToCssVars(portfolio.mood) as CSSProperties;
-  // 공간(Space) 시스템 — Plan.md §10. 무드별로 히어로 연출이 달라진다.
-  const isCollage = portfolio.mood === "collage"; // 종이 스티커 · 종이 질감 · 컷아웃 타이틀
-  const isPop = portfolio.mood === "pop"; // 스피치버블 · 스파클 · 청키 라운드
+  // 두 축: 스타일(레이아웃) × 색감(팔레트). 스타일이 작품 배치를 결정한다.
+  const styleId = portfolio.style ?? "gallery";
+  // 색감별 히어로 연출(콜라주·팝)은 기본 갤러리 스타일에서만 켠다 —
+  // 다른 스타일에서는 색감이 팔레트로만 작동해 조합이 깨지지 않는다.
+  const isCollage = styleId === "gallery" && portfolio.mood === "collage";
+  const isPop = styleId === "gallery" && portfolio.mood === "pop";
 
   return (
     <main className="pf-root relative min-h-screen" style={style}>
@@ -115,8 +123,20 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
 
       <div className="border-t border-[var(--pf-line)]" />
 
-      {/* 아카이브 갤러리 + 라이트박스 */}
-      <Gallery works={works} />
+      {/* 작품 영역 — 선택한 스타일(레이아웃)로 렌더 */}
+      {styleId === "spotlight" ? (
+        <StyleSpotlight works={works} />
+      ) : styleId === "handwritten" ? (
+        <StyleHandwritten works={works} />
+      ) : styleId === "feed" ? (
+        <StyleFeed works={works} />
+      ) : styleId === "wall" ? (
+        <StyleWall works={works} />
+      ) : styleId === "pile" ? (
+        <StylePile works={works} />
+      ) : (
+        <Gallery works={works} />
+      )}
 
       {/* FOOTER */}
       <footer className="border-t border-[var(--pf-line)] px-6 py-14 sm:px-10 sm:py-20">

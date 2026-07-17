@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { DEFAULT_CATEGORY, workTitle, type WorkItem } from "@/lib/types";
+import WorkLightbox from "./Lightbox";
 
 // 에디토리얼 전시 갤러리.
 // 잡지 지면처럼 — 작품을 크롭하지 않고 '누끼'로 띄우고(그림자), 아래에 제목 + 짧은 소개.
@@ -54,33 +55,6 @@ export default function Gallery({ works }: { works: WorkItem[] }) {
   }, [groups]);
 
   const [open, setOpen] = useState<number | null>(null);
-  const current = open === null ? null : flat[open];
-
-  const close = useCallback(() => setOpen(null), []);
-  const prev = useCallback(
-    () => setOpen((i) => (i === null ? null : (i + flat.length - 1) % flat.length)),
-    [flat.length],
-  );
-  const next = useCallback(
-    () => setOpen((i) => (i === null ? null : (i + 1) % flat.length)),
-    [flat.length],
-  );
-
-  // 키보드: ←/→ 넘기기, Esc 닫기
-  useEffect(() => {
-    if (open === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      else if (e.key === "ArrowLeft") prev();
-      else if (e.key === "ArrowRight") next();
-    };
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [open, close, prev, next]);
 
   if (works.length === 0) return null;
 
@@ -154,75 +128,7 @@ export default function Gallery({ works }: { works: WorkItem[] }) {
       </ul>
 
       {/* 라이트박스 (전시 상세) */}
-      {current && (
-        <div
-          className="fixed inset-0 z-50 flex flex-col bg-black/92 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          onClick={close}
-        >
-          {/* 상단 바 */}
-          <div className="flex items-center justify-between px-5 py-4 text-neutral-400">
-            <span className="text-sm tabular-nums">
-              {open! + 1} / {flat.length}
-            </span>
-            <button
-              type="button"
-              onClick={close}
-              className="text-2xl leading-none text-neutral-300 hover:text-white"
-              aria-label="닫기"
-            >
-              ×
-            </button>
-          </div>
-
-          {/* 작품 (스포트라이트) */}
-          <div
-            className="flex flex-1 items-center justify-center gap-2 px-3 sm:gap-4 sm:px-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <NavBtn dir="prev" onClick={prev} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={current.image}
-              alt={current.alt ?? workTitle(current) ?? ""}
-              className="max-h-[64vh] max-w-full rounded object-contain shadow-2xl"
-            />
-            <NavBtn dir="next" onClick={next} />
-          </div>
-
-          {/* 벽 라벨 — 카테고리 · 제목 · 소개 */}
-          <div
-            className="px-6 pb-10 pt-4 text-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p className="text-xs font-medium tracking-[0.25em] text-neutral-500">
-              {(current.category?.trim() || DEFAULT_CATEGORY).toUpperCase()}
-            </p>
-            <p className="mx-auto mt-2 max-w-[46ch] break-keep text-lg font-semibold text-neutral-100 sm:text-xl">
-              {workTitle(current) ?? "무제"}
-            </p>
-            {current.description && (
-              <p className="mx-auto mt-2 max-w-[52ch] text-balance break-keep text-sm leading-relaxed text-neutral-400">
-                {current.description}
-              </p>
-            )}
-          </div>
-        </div>
-      )}
+      <WorkLightbox works={flat} index={open} onChange={setOpen} />
     </section>
-  );
-}
-
-function NavBtn({ dir, onClick }: { dir: "prev" | "next"; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={dir === "prev" ? "이전" : "다음"}
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/25 text-xl text-neutral-200 transition hover:bg-white/10"
-    >
-      {dir === "prev" ? "‹" : "›"}
-    </button>
   );
 }

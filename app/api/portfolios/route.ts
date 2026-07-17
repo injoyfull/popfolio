@@ -7,7 +7,8 @@ import { generateId } from "@/lib/id";
 import { savePortfolio } from "@/lib/storage";
 import { buildWorkItems } from "@/lib/works-upload";
 import { MOODS, DEFAULT_MOOD } from "@/lib/moods";
-import type { MoodId, Portfolio } from "@/lib/types";
+import { hasStyle, DEFAULT_STYLE } from "@/lib/styles";
+import type { MoodId, Portfolio, StyleId } from "@/lib/types";
 
 export async function POST(request: Request) {
   let form: FormData;
@@ -29,6 +30,9 @@ export async function POST(request: Request) {
   const moodRaw = String(form.get("mood") ?? "");
   const mood: MoodId = moodRaw in MOODS ? (moodRaw as MoodId) : DEFAULT_MOOD;
 
+  const styleRaw = String(form.get("style") ?? "");
+  const style: StyleId = hasStyle(styleRaw) ? styleRaw : DEFAULT_STYLE;
+
   const id = generateId();
   const editKey = generateId(24);
   const items = await buildWorkItems(id, form);
@@ -38,6 +42,7 @@ export async function POST(request: Request) {
     createdAt: new Date().toISOString(),
     brand: { name, childName: childName || undefined, tagline, about },
     mood,
+    style,
     items,
     editKey,
   };
