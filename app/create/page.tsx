@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { MOOD_LIST, DEFAULT_MOOD } from "@/lib/moods";
+import { MOOD_LIST, COMING_MOODS, DEFAULT_MOOD } from "@/lib/moods";
 import { STYLE_LIST, COMING_STYLES, DEFAULT_STYLE } from "@/lib/styles";
 import { prepareImage } from "@/lib/image-client";
-import type { MoodId, StyleId } from "@/lib/types";
+import BrandPage from "@/components/brand/BrandPage";
+import type { MoodId, StyleId, Portfolio } from "@/lib/types";
 
 interface Draft {
   key: string;
@@ -35,6 +36,41 @@ export default function CreatePage() {
   const [preparing, setPreparing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [preview, setPreview] = useState(false);
+
+  // 미리보기 — 지금 입력·업로드한 것들로 결과 페이지(Portfolio)를 임시 조립.
+  // 이미지 blob의 objectURL을 그대로 쓰므로 서버 없이 즉시 렌더된다.
+  const previewPortfolio: Portfolio | null = useMemo(() => {
+    if (!preview) return null;
+    return {
+      id: "preview",
+      createdAt: new Date().toISOString(),
+      brand: {
+        name: name.trim() || "우리 아이 전시",
+        childName: childName.trim() || undefined,
+        tagline: tagline.trim(),
+        about: about.trim(),
+      },
+      mood,
+      style: styleId,
+      items: drafts.map((d, i) => ({
+        id: d.key,
+        image: d.url,
+        title: d.title.trim() || undefined,
+        description: d.description.trim() || undefined,
+        category: d.category.trim() || undefined,
+        order: i,
+      })),
+    };
+  }, [preview, name, childName, tagline, about, mood, styleId, drafts]);
+
+  // 미리보기 열려 있는 동안 배경 스크롤 잠금
+  useEffect(() => {
+    document.body.style.overflow = preview ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [preview]);
 
   // 이미 입력된 카테고리들 (빠른 재사용용 datalist)
   const usedCategories = useMemo(() => {
@@ -290,6 +326,25 @@ export default function CreatePage() {
                 </button>
               );
             })}
+            {COMING_MOODS.map((c) => (
+              <div
+                key={c.en}
+                className="rounded-xl border border-dashed border-neutral-200 p-3 opacity-55"
+              >
+                <span className="flex gap-1">
+                  {c.dots.map((d) => (
+                    <Swatch key={d} color={d} />
+                  ))}
+                </span>
+                <span className="mt-2 block text-sm font-semibold">
+                  {c.ko}{" "}
+                  <span className="font-medium text-neutral-400">{c.en}</span>
+                </span>
+                <span className="mt-0.5 block text-xs text-neutral-400">
+                  준비 중 · Coming soon
+                </span>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -411,22 +466,49 @@ export default function CreatePage() {
           </p>
         )}
 
-        <div className="mt-10 flex items-center gap-3">
+        <div className="mt-10 flex flex-wrap items-center gap-3">
           <button
             type="submit"
             disabled={submitting || preparing}
             className="rounded-xl bg-neutral-900 px-6 py-3 font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
           >
-            {submitting ? "세우는 중…" : "우리 아이 전시 세우기 →"}
+            {submitting ? "전시 여는 중…" : "전시 열기 →"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setPreview(true)}
+            className="rounded-xl border border-neutral-300 px-5 py-3 text-sm font-semibold text-neutral-700 transition hover:border-neutral-500"
+          >
+            내 전시 미리보기
           </button>
           <Link
-            href="/p/sample"
+            href={`/p/sample?style=${styleId}&mood=${mood}`}
             className="text-sm text-neutral-400 hover:text-neutral-600"
           >
-            샘플 먼저 보기
+            이 조합을 샘플로 구경하기
           </Link>
         </div>
       </form>
+
+      {/* 내 전시 미리보기 — 지금 입력·업로드한 것들로 결과 페이지를 그대로 렌더 */}
+      {preview && previewPortfolio && (
+        <div className="fixed inset-0 z-[60] overflow-y-auto bg-white">
+          <div className="sticky top-0 z-[70] flex items-center justify-between gap-3 bg-neutral-900 px-4 py-2.5 text-white">
+            <span className="truncate text-sm">
+              미리보기 — 지금 고른 스타일·색감·작품으로 보는 내 전시예요.
+              {drafts.length === 0 && " (작품을 올리면 여기서 함께 보여요)"}
+            </span>
+            <button
+              type="button"
+              onClick={() => setPreview(false)}
+              className="shrink-0 rounded-full border border-white/30 px-4 py-1.5 text-sm font-semibold hover:bg-white/10"
+            >
+              닫고 이어서 만들기 ×
+            </button>
+          </div>
+          <BrandPage portfolio={previewPortfolio} />
+        </div>
+      )}
 
       <style jsx global>{`
         .pf-input {

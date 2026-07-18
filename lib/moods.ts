@@ -234,6 +234,12 @@ export const MOODS: Record<MoodId, Mood> = {
   },
 };
 
+/** 아직 준비 중인 색감 — 선택 UI에 비활성으로 노출해 확장 방향을 보여준다. */
+export const COMING_MOODS: { ko: string; en: string; dots: string[] }[] = [
+  { ko: "노을", en: "Sunset", dots: ["#FFD9C0", "#FF8A5C", "#6D4471"] },
+  { ko: "숲", en: "Forest", dots: ["#E4EFDD", "#6FA05C", "#33513B"] },
+];
+
 export const MOOD_LIST: Mood[] = [
   MOODS.modern,
   MOODS.warm,
