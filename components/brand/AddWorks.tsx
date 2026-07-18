@@ -36,6 +36,21 @@ export default function AddWorks({
   const [preparing, setPreparing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
+
+  // 드래그 앤 드롭 — 사진 앱·폴더에서 바로 끌어다 놓기 (파일 대화상자 우회)
+  function onDragOver(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(true);
+  }
+  function onDragLeave() {
+    setDragging(false);
+  }
+  function onDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(false);
+    addFiles(e.dataTransfer.files);
+  }
 
   const categories = useMemo(() => {
     const set = new Set(existingCategories);
@@ -139,7 +154,12 @@ export default function AddWorks({
           오늘의 작업을 올리면 아카이브에 더해져요.
         </p>
 
-        <section className="mt-8">
+        <section
+          className="mt-8"
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+        >
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-neutral-700">
               추가할 작품 ({drafts.length})
@@ -165,7 +185,8 @@ export default function AddWorks({
             />
           </div>
           <p className="mt-1 text-xs text-neutral-400">
-            큰 사진도 괜찮아요 — 올리기 전에 자동으로 알맞게 줄여요.
+            큰 사진도 괜찮아요 — 올리기 전에 자동으로 알맞게 줄여요. 사진 앱이나
+            폴더에서 끌어다 놓아도 돼요.
           </p>
 
           {drafts.length === 0 ? (
@@ -173,11 +194,19 @@ export default function AddWorks({
               type="button"
               onClick={() => fileRef.current?.click()}
               disabled={preparing}
-              className="mt-4 flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-neutral-300 py-12 text-neutral-400 hover:border-neutral-400 disabled:opacity-60"
+              className={`mt-4 flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed py-12 transition disabled:opacity-60 ${
+                dragging
+                  ? "border-neutral-700 bg-neutral-100 text-neutral-600"
+                  : "border-neutral-300 text-neutral-400 hover:border-neutral-400"
+              }`}
             >
               <span className="text-3xl">＋</span>
               <span className="mt-2 text-sm">
-                {preparing ? "이미지 처리 중…" : "작업 사진을 올려보세요"}
+                {preparing
+                  ? "이미지 처리 중…"
+                  : dragging
+                    ? "여기에 놓으면 올라가요!"
+                    : "작품 사진을 올리거나, 여기로 끌어다 놓으세요"}
               </span>
             </button>
           ) : (

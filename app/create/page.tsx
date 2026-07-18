@@ -37,6 +37,22 @@ export default function CreatePage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
+  const [dragging, setDragging] = useState(false);
+
+  // 드래그 앤 드롭 — 파일 대화상자(사진 보관함에서 Open 비활성 이슈)를 우회해
+  // 사진 앱·폴더에서 바로 끌어다 놓을 수 있게 한다.
+  function onDragOver(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(true);
+  }
+  function onDragLeave() {
+    setDragging(false);
+  }
+  function onDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(false);
+    addFiles(e.dataTransfer.files);
+  }
 
   // 미리보기 — 지금 입력·업로드한 것들로 결과 페이지(Portfolio)를 임시 조립.
   // 이미지 blob의 objectURL을 그대로 쓰므로 서버 없이 즉시 렌더된다.
@@ -378,7 +394,12 @@ export default function CreatePage() {
         </section>
 
         {/* 작업 */}
-        <section className="mt-10">
+        <section
+          className="mt-10"
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+        >
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-neutral-700">
               작품 ({drafts.length})
@@ -404,7 +425,8 @@ export default function CreatePage() {
             />
           </div>
           <p className="mt-1 text-xs text-neutral-400">
-            큰 사진도 괜찮아요 — 올리기 전에 자동으로 알맞게 줄여요.
+            큰 사진도 괜찮아요 — 올리기 전에 자동으로 알맞게 줄여요. 사진 앱이나
+            폴더에서 <span className="font-medium">끌어다 놓아도</span> 돼요.
           </p>
 
           {drafts.length === 0 ? (
@@ -412,11 +434,19 @@ export default function CreatePage() {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={preparing}
-              className="mt-4 flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-neutral-300 py-12 text-neutral-400 hover:border-neutral-400 hover:text-neutral-500 disabled:opacity-60"
+              className={`mt-4 flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed py-12 transition disabled:opacity-60 ${
+                dragging
+                  ? "border-neutral-700 bg-neutral-100 text-neutral-600"
+                  : "border-neutral-300 text-neutral-400 hover:border-neutral-400 hover:text-neutral-500"
+              }`}
             >
               <span className="text-3xl">＋</span>
               <span className="mt-2 text-sm">
-                {preparing ? "이미지 처리 중…" : "아이 작품 사진을 올려보세요"}
+                {preparing
+                  ? "이미지 처리 중…"
+                  : dragging
+                    ? "여기에 놓으면 올라가요!"
+                    : "아이 작품 사진을 올리거나, 여기로 끌어다 놓으세요"}
               </span>
             </button>
           ) : (
