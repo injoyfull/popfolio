@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   const about = String(form.get("about") ?? "").trim();
 
   if (!name) {
-    return Response.json({ error: "전시명은 필요해요." }, { status: 400 });
+    return Response.json({ error: "전시공간 이름은 필요해요." }, { status: 400 });
   }
 
   const moodRaw = String(form.get("mood") ?? "");

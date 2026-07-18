@@ -111,7 +111,7 @@ export default function CreatePage() {
     e.preventDefault();
     setError(null);
     if (!name.trim()) {
-      setError("전시명을 적어주세요.");
+      setError("전시공간 이름을 적어주세요.");
       return;
     }
     setSubmitting(true);
@@ -177,7 +177,7 @@ export default function CreatePage() {
             />
           </Field>
 
-          <Field label="전시명" required>
+          <Field label="전시공간 · Space" required>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -185,7 +185,8 @@ export default function CreatePage() {
               className="pf-input"
             />
             <span className="mt-1.5 block text-xs text-neutral-400">
-              전시 페이지 맨 위에 큰 제목으로 걸려요.
+              우리 아이 전시가 열리는 공간의 이름 — 페이지 맨 위에 큰 제목으로
+              걸려요.
             </span>
           </Field>
 
