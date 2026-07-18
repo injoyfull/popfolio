@@ -8,7 +8,10 @@ export type MoodId =
   | "minimal"
   | "vivid"
   | "collage"
-  | "pop";
+  | "pop"
+  | "ocean"
+  | "mint"
+  | "candy";
 
 // 스타일(레이아웃) 축 — 작품이 한 화면에 "어떻게 담기는가".
 // 색감(MoodId)과 독립적으로 조합된다. (스타일 × 색감)

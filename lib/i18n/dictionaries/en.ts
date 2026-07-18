@@ -64,6 +64,9 @@ const en: Dictionary = {
       vivid: { label: "Vivid", desc: "Bold color blocks and big type. A trendy pop-up mood." },
       collage: { label: "Collage", desc: "A cut-paper pop-up. Pastel cutouts and paper grain." },
       pop: { label: "Pop", desc: "Chunky rounded type, speech bubbles, and sparkles. A bouncy brand." },
+      ocean: { label: "Ocean", desc: "Cobalt accents on pale blue. Calm and breezy." },
+      mint: { label: "Mint", desc: "Fresh mint backdrop with deep green accents." },
+      candy: { label: "Candy", desc: "Soft pink with a bold strawberry accent. Sweet and playful." },
     },
   },
   finalCta: {

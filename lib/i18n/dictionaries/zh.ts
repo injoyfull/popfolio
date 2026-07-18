@@ -65,6 +65,9 @@ const zh: Dictionary = {
       vivid: { label: "鲜明", desc: "明快的色块与大字体。时髦的快闪气质。" },
       collage: { label: "拼贴", desc: "像剪纸拼贴的快闪风格。柔和色块与纸质纹理。" },
       pop: { label: "波普", desc: "圆润粗体字＋对话气泡＋闪光。活泼跳跃的品牌感。" },
+      ocean: { label: "海洋", desc: "浅蓝底色配钴蓝点缀。沉静清爽的海风。" },
+      mint: { label: "薄荷", desc: "清新薄荷底色配深绿点缀。生机盎然。" },
+      candy: { label: "糖果", desc: "柔粉底色配草莓色点缀。甜美俏皮。" },
     },
   },
   finalCta: {

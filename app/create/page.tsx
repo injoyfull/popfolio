@@ -168,11 +168,11 @@ export default function CreatePage() {
 
         {/* 기본 정보 */}
         <section className="mt-10 space-y-6">
-          <Field label="아이 이름">
+          <Field label="작가 이름 · Artist">
             <input
               value={childName}
               onChange={(e) => setChildName(e.target.value)}
-              placeholder="예: 워니"
+              placeholder="예: 워니 — 우리 아이가 이 전시의 작가예요"
               className="pf-input"
             />
           </Field>
@@ -198,7 +198,7 @@ export default function CreatePage() {
             />
           </Field>
 
-          <Field label="아이 소개 (몇 살, 뭘 좋아하는지)">
+          <Field label="작가 소개 · About (몇 살, 뭘 좋아하는지)">
             <textarea
               value={about}
               onChange={(e) => setAbout(e.target.value)}
