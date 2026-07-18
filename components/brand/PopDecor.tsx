@@ -8,22 +8,30 @@ export default function PopDecor() {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
+      {/*
+        배치 원칙: 본문(스피치버블·소개 글)은 가운데 max-w-3xl 컬럼에 있다.
+        스티커는 그 컬럼 '바깥 여백'에만 두어 글자를 덮지 않게 한다.
+        모바일은 여백이 거의 없으므로 최소 개수만, 그것도 상단 모서리에만.
+      */}
+
+      {/* 상단 — 버블 어깨 옆 (버블이 불투명해 자연스럽게 가려짐) */}
       <Sparkle
         color="#17B26A"
-        className="absolute left-[3%] top-[12%] h-10 w-10 sm:h-14 sm:w-14"
+        className="absolute left-1 top-[14%] h-9 w-9 sm:left-[2%] sm:h-14 sm:w-14"
       />
       <Sparkle
         color="#F6E24B"
-        className="absolute right-[6%] top-[8%] h-12 w-12 sm:h-16 sm:w-16"
+        className="absolute right-1 top-[9%] h-10 w-10 sm:right-[3%] sm:h-16 sm:w-16"
       />
-      {/* 하단 스티커는 모바일에서 본문 텍스트를 덮으므로 데스크톱만 */}
+
+      {/* 이하 데스크톱 전용 — 가운데 컬럼 바깥 여백에만 배치 */}
+      <Blob className="absolute left-[6%] top-[2%] hidden h-10 w-14 lg:block" />
+      <Flower className="absolute right-[4%] top-[46%] hidden h-12 w-12 rotate-6 lg:block" />
+      <Smiley className="absolute left-[3%] bottom-[12%] hidden h-14 w-14 lg:block" />
       <Sparkle
         color="#F4A6C0"
-        className="absolute right-[14%] bottom-[16%] hidden h-11 w-11 sm:block"
+        className="absolute right-[7%] bottom-[18%] hidden h-11 w-11 lg:block"
       />
-      <Smiley className="absolute left-[6%] bottom-[10%] hidden h-14 w-14 sm:block" />
-      <Flower className="absolute right-[3%] top-[42%] h-9 w-9 rotate-6 sm:h-12 sm:w-12" />
-      <Blob className="absolute left-[38%] top-[2%] hidden h-10 w-14 sm:block" />
     </div>
   );
 }

@@ -58,6 +58,14 @@ export default function AddWorks({
     return [...set];
   }, [drafts, existingCategories]);
 
+  // 눌러서 고르는 묶음 — 이 전시에 이미 있는 묶음을 앞에, 없으면 기본 묶음을 채운다.
+  const categoryOptions = useMemo(() => {
+    const base = ["그림", "만들기", "사진", "오려붙이기", "글씨"];
+    const merged = [...existingCategories];
+    for (const b of base) if (!merged.includes(b)) merged.push(b);
+    return merged.slice(0, 6);
+  }, [existingCategories]);
+
   async function addFiles(files: FileList | null) {
     if (!files) return;
     const imgs = Array.from(files).filter((f) => f.type.startsWith("image/"));
@@ -234,16 +242,46 @@ export default function AddWorks({
                       onChange={(e) =>
                         patch(d.key, "description", e.target.value)
                       }
-                      placeholder="짧은 소개 (예: 매일 한 장씩 그려요)"
+                      placeholder="이 작품에 담긴 이야기 (예: 비 온 뒤 숲이 제일 예쁘대요)"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
                     />
-                    <input
-                      value={d.category}
-                      onChange={(e) => patch(d.key, "category", e.target.value)}
-                      placeholder="카테고리 (예: 그림 · 만들기 · 사진)"
-                      list="pf-cats-add"
-                      className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
-                    />
+
+                    {/* 카테고리 — 눌러서 고르기. 기존 묶음이 있으면 그것부터 보여준다. */}
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-xs text-neutral-400">묶음:</span>
+                      {categoryOptions.map((c) => {
+                        const on = d.category.trim() === c;
+                        return (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() =>
+                              patch(d.key, "category", on ? "" : c)
+                            }
+                            className={`rounded-full border px-2.5 py-1 text-xs transition ${
+                              on
+                                ? "border-neutral-900 bg-neutral-900 font-semibold text-white"
+                                : "border-neutral-200 bg-neutral-50 text-neutral-500 hover:border-neutral-400"
+                            }`}
+                          >
+                            {c}
+                          </button>
+                        );
+                      })}
+                      <input
+                        value={
+                          categoryOptions.includes(d.category.trim())
+                            ? ""
+                            : d.category
+                        }
+                        onChange={(e) =>
+                          patch(d.key, "category", e.target.value)
+                        }
+                        placeholder="직접 입력"
+                        list="pf-cats-add"
+                        className="w-24 rounded-full border border-dashed border-neutral-300 px-2.5 py-1 text-xs outline-none focus:border-neutral-500"
+                      />
+                    </div>
                     <button
                       type="button"
                       onClick={() => remove(d.key)}

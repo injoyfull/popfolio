@@ -91,6 +91,9 @@ export default function CreatePage() {
   // 예시 칩에 작가 이름을 끼워 넣어 "내 이야기"처럼 보이게
   const exBase = childName.trim() || "워니";
 
+  // 카테고리 기본 선택지 — 아이 작품에서 가장 흔한 묶음. 타이핑 대신 눌러서 고른다.
+  const categoryOptions = ["그림", "만들기", "사진", "오려붙이기", "글씨"];
+
   // 이미 입력된 카테고리들 (빠른 재사용용 datalist)
   const usedCategories = useMemo(() => {
     const set = new Set<string>();
@@ -474,16 +477,46 @@ export default function CreatePage() {
                       onChange={(e) =>
                         patch(d.key, "description", e.target.value)
                       }
-                      placeholder="짧은 소개 (예: 매일 한 장씩 그려요)"
+                      placeholder="이 작품에 담긴 이야기 (예: 비 온 뒤 숲이 제일 예쁘대요)"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
                     />
-                    <input
-                      value={d.category}
-                      onChange={(e) => patch(d.key, "category", e.target.value)}
-                      placeholder="카테고리 (예: 그림 · 만들기 · 사진)"
-                      list="pf-cats"
-                      className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
-                    />
+
+                    {/* 카테고리 — 눌러서 고르기 (타이핑 최소화) */}
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-xs text-neutral-400">묶음:</span>
+                      {categoryOptions.map((c) => {
+                        const on = d.category.trim() === c;
+                        return (
+                          <button
+                            key={c}
+                            type="button"
+                            onClick={() =>
+                              patch(d.key, "category", on ? "" : c)
+                            }
+                            className={`rounded-full border px-2.5 py-1 text-xs transition ${
+                              on
+                                ? "border-neutral-900 bg-neutral-900 font-semibold text-white"
+                                : "border-neutral-200 bg-neutral-50 text-neutral-500 hover:border-neutral-400"
+                            }`}
+                          >
+                            {c}
+                          </button>
+                        );
+                      })}
+                      <input
+                        value={
+                          categoryOptions.includes(d.category.trim())
+                            ? ""
+                            : d.category
+                        }
+                        onChange={(e) =>
+                          patch(d.key, "category", e.target.value)
+                        }
+                        placeholder="직접 입력"
+                        list="pf-cats"
+                        className="w-24 rounded-full border border-dashed border-neutral-300 px-2.5 py-1 text-xs outline-none focus:border-neutral-500"
+                      />
+                    </div>
                     <div className="flex items-center gap-1 text-neutral-400">
                       <IconBtn
                         label="위로"
