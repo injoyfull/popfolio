@@ -72,6 +72,9 @@ export default function CreatePage() {
     };
   }, [preview]);
 
+  // 예시 칩에 작가 이름을 끼워 넣어 "내 이야기"처럼 보이게
+  const exBase = childName.trim() || "워니";
+
   // 이미 입력된 카테고리들 (빠른 재사용용 datalist)
   const usedCategories = useMemo(() => {
     const set = new Set<string>();
@@ -217,21 +220,39 @@ export default function CreatePage() {
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="예: 워니의 아트룸"
+              placeholder="예: 거꾸로방 · 꼬마 미술관"
               className="pf-input"
             />
             <span className="mt-1.5 block text-xs text-neutral-400">
               우리 아이 전시가 열리는 공간의 이름 — 페이지 맨 위에 큰 제목으로
               걸려요.
             </span>
+            <ExampleChips
+              examples={[
+                `${exBase}의 아트룸`,
+                `${exBase}의 그림창고`,
+                "꼬마 미술관",
+                "우리집 거실 갤러리",
+              ]}
+              onPick={setName}
+            />
           </Field>
 
           <Field label="한 줄 소개 · 컨셉">
             <input
               value={tagline}
               onChange={(e) => setTagline(e.target.value)}
-              placeholder="예: 일곱 살, 매일 그리고 만드는 중"
+              placeholder="예: 여섯 살의 눈으로 본 세상"
               className="pf-input"
+            />
+            <ExampleChips
+              examples={[
+                "여섯 살의 눈으로 본 세상",
+                "공룡을 사랑하는 꼬마 화가의 기록",
+                "냉장고 문에서 옮겨 온 첫 전시",
+                "매일 조금씩 자라는 그림들",
+              ]}
+              onPick={setTagline}
             />
           </Field>
 
@@ -240,8 +261,16 @@ export default function CreatePage() {
               value={about}
               onChange={(e) => setAbout(e.target.value)}
               rows={4}
-              placeholder="예: 안녕하세요, 일곱 살 워니의 작품 전시예요. 그림과 만들기를 좋아해요."
+              placeholder="예: 말보다 그림이 빠른 아이예요. 색칠과 찰흙놀이를 제일 좋아해요."
               className="pf-input resize-y"
+            />
+            <ExampleChips
+              examples={[
+                `안녕하세요, ${exBase}의 작품 전시예요. 색칠과 찰흙놀이를 제일 좋아해요.`,
+                "말보다 그림이 빠른 아이. 매일 식탁에서 한 점씩 자라요.",
+                "요즘은 온통 공룡 그리기. 다섯 살부터의 그림을 모았어요.",
+              ]}
+              onPick={setAbout}
             />
           </Field>
         </section>
@@ -549,6 +578,32 @@ function Field({
       </span>
       {children}
     </label>
+  );
+}
+
+// 예시 칩 — 누르면 해당 필드가 그 문구로 채워진다("빈칸 공포" 해소용).
+// 채운 뒤 자유롭게 고치면 되므로 덮어쓰기로 동작한다.
+function ExampleChips({
+  examples,
+  onPick,
+}: {
+  examples: string[];
+  onPick: (value: string) => void;
+}) {
+  return (
+    <span className="mt-2 flex flex-wrap items-center gap-1.5">
+      <span className="text-xs text-neutral-400">눌러서 채우기:</span>
+      {examples.map((ex) => (
+        <button
+          key={ex}
+          type="button"
+          onClick={() => onPick(ex)}
+          className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-left text-xs leading-snug text-neutral-500 transition hover:border-neutral-400 hover:text-neutral-800"
+        >
+          {ex}
+        </button>
+      ))}
+    </span>
   );
 }
 
