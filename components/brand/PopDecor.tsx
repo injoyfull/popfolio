@@ -14,23 +14,36 @@ export default function PopDecor() {
         모바일은 여백이 거의 없으므로 최소 개수만, 그것도 상단 모서리에만.
       */}
 
-      {/* 상단 — 버블 어깨 옆 (버블이 불투명해 자연스럽게 가려짐) */}
+      {/* 상단 — 버블 어깨 옆 (모바일에서도 보이는 최소 세트) */}
       <Sparkle
         color="#17B26A"
-        className="absolute left-1 top-[14%] h-9 w-9 sm:left-[2%] sm:h-14 sm:w-14"
+        className="absolute left-1 top-[14%] h-9 w-9 sm:left-[2%] sm:h-12 sm:w-12"
       />
       <Sparkle
         color="#F6E24B"
-        className="absolute right-1 top-[9%] h-10 w-10 sm:right-[3%] sm:h-16 sm:w-16"
+        className="absolute right-1 top-[9%] h-10 w-10 sm:right-[3%] sm:h-14 sm:w-14"
       />
 
-      {/* 이하 데스크톱 전용 — 가운데 컬럼 바깥 여백에만 배치 */}
-      <Blob className="absolute left-[6%] top-[2%] hidden h-10 w-14 lg:block" />
-      <Flower className="absolute right-[4%] top-[46%] hidden h-12 w-12 rotate-6 lg:block" />
-      <Smiley className="absolute left-[3%] bottom-[12%] hidden h-14 w-14 lg:block" />
+      {/* 태블릿+ — 좌우 여백에 리듬을 준다 (버블 위/아래로 흩뿌림) */}
+      <Blob className="absolute left-[8%] top-[1%] hidden h-9 w-12 sm:block" />
+      <Smiley className="absolute right-[6%] bottom-[8%] hidden h-11 w-11 sm:block" />
       <Sparkle
         color="#F4A6C0"
-        className="absolute right-[7%] bottom-[18%] hidden h-11 w-11 lg:block"
+        className="absolute left-[4%] bottom-[26%] hidden h-8 w-8 sm:block"
+      />
+
+      {/* 데스크톱 — 여백이 넓어지므로 더 다양하게 채운다 */}
+      <Flower className="absolute right-[3%] top-[40%] hidden h-12 w-12 rotate-6 lg:block" />
+      <Smiley className="absolute left-[2%] top-[30%] hidden h-12 w-12 lg:block" />
+      <Sparkle
+        color="#B79CE0"
+        className="absolute right-[10%] top-[4%] hidden h-9 w-9 lg:block"
+      />
+      <Blob className="absolute right-[2%] bottom-[34%] hidden h-8 w-11 lg:block" />
+      <Flower className="absolute left-[7%] bottom-[6%] hidden h-9 w-9 -rotate-12 lg:block" />
+      <Sparkle
+        color="#17B26A"
+        className="absolute left-[13%] top-[6%] hidden h-7 w-7 xl:block"
       />
     </div>
   );

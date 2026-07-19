@@ -31,20 +31,33 @@ export async function POST(
     return Response.json({ error: "편집 권한이 없어요." }, { status: 403 });
   }
 
-  // 기존 파일명과 겹치지 않도록 고유 접두어
-  const prefix = `a${Date.now().toString(36)}-`;
-  const items = await buildWorkItems(id, form, prefix);
-  if (items.length === 0) {
-    return Response.json({ error: "추가할 이미지가 없어요." }, { status: 400 });
-  }
+  // 업로드·저장 실패 원인이 드러나도록 감싼다(빈 500 방지)
+  try {
+    // 기존 파일명과 겹치지 않도록 고유 접두어
+    const prefix = `a${Date.now().toString(36)}-`;
+    const items = await buildWorkItems(id, form, prefix);
+    if (items.length === 0) {
+      return Response.json({ error: "추가할 이미지가 없어요." }, { status: 400 });
+    }
 
-  const result = await appendItems(id, key, items);
-  if (result === null) {
-    return Response.json({ error: "포트폴리오를 찾을 수 없어요." }, { status: 404 });
-  }
-  if (result === "forbidden") {
-    return Response.json({ error: "편집 권한이 없어요." }, { status: 403 });
-  }
+    const result = await appendItems(id, key, items);
+    if (result === null) {
+      return Response.json(
+        { error: "포트폴리오를 찾을 수 없어요." },
+        { status: 404 },
+      );
+    }
+    if (result === "forbidden") {
+      return Response.json({ error: "편집 권한이 없어요." }, { status: 403 });
+    }
 
-  return Response.json({ id, total: result.items.length }, { status: 200 });
+    return Response.json({ id, total: result.items.length }, { status: 200 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[POST /api/portfolios/:id/works] 추가 실패:", message);
+    return Response.json(
+      { error: `작품을 추가하지 못했어요: ${message}` },
+      { status: 500 },
+    );
+  }
 }

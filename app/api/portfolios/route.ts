@@ -4,7 +4,7 @@
 // 응답: { id, editKey } — editKey는 나중에 작품을 이어 올리기 위한 비밀 키.
 
 import { generateId } from "@/lib/id";
-import { savePortfolio } from "@/lib/storage";
+import { savePortfolio, storageMode } from "@/lib/storage";
 import { buildWorkItems } from "@/lib/works-upload";
 import { MOODS, DEFAULT_MOOD } from "@/lib/moods";
 import { hasStyle, DEFAULT_STYLE } from "@/lib/styles";
@@ -35,19 +35,32 @@ export async function POST(request: Request) {
 
   const id = generateId();
   const editKey = generateId(24);
-  const items = await buildWorkItems(id, form);
 
-  const portfolio: Portfolio = {
-    id,
-    createdAt: new Date().toISOString(),
-    brand: { name, childName: childName || undefined, tagline, about },
-    mood,
-    style,
-    items,
-    editKey,
-  };
+  // 업로드·저장은 실패 원인이 다양하다(스토리지 미설정, 버킷 없음, 권한 등).
+  // 던져진 에러를 그대로 500 빈 응답으로 흘리면 원인을 알 수 없으므로
+  // 메시지를 담아 돌려준다. (mode는 진단용 — 비밀값은 포함하지 않는다)
+  try {
+    const items = await buildWorkItems(id, form);
 
-  await savePortfolio(portfolio);
+    const portfolio: Portfolio = {
+      id,
+      createdAt: new Date().toISOString(),
+      brand: { name, childName: childName || undefined, tagline, about },
+      mood,
+      style,
+      items,
+      editKey,
+    };
 
-  return Response.json({ id, editKey }, { status: 201 });
+    await savePortfolio(portfolio);
+
+    return Response.json({ id, editKey }, { status: 201 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[POST /api/portfolios] 저장 실패:", message);
+    return Response.json(
+      { error: `저장하지 못했어요: ${message}`, mode: storageMode() },
+      { status: 500 },
+    );
+  }
 }
