@@ -52,24 +52,24 @@ const gaegu = Gaegu({
 export const metadata: Metadata = {
   metadataBase: new URL("https://popfolio-two.vercel.app"),
   title: {
-    default: "Popfolio — 우리 아이 첫 개인전",
+    default: "Popfolio — 나만의 팝업 전시",
     template: "%s · Popfolio",
   },
   description:
-    "사진첩에 묻어두지 마세요. 아이 작품 사진 몇 장과 이름만 넣으면, 트렌디한 팝업 전시로 세워드려요. 링크 하나로 온 가족을 초대하세요.",
+    "사진첩에 묻어두지 마세요. 작품 사진 몇 장과 몇 마디면, 트렌디한 팝업 전시로 세워드려요. 링크 하나로 초대하세요.",
   openGraph: {
-    title: "Popfolio — 우리 아이 첫 개인전",
+    title: "Popfolio — 나만의 팝업 전시",
     description:
-      "아이 작품 사진 몇 장과 이름만 넣으면, 트렌디한 팝업 전시로. 링크 하나로 온 가족을 초대하세요.",
+      "작품 사진 몇 장과 몇 마디면, 트렌디한 팝업 전시로. 링크 하나로 초대하세요.",
     siteName: "Popfolio",
     locale: "ko_KR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Popfolio — 우리 아이 첫 개인전",
+    title: "Popfolio — 나만의 팝업 전시",
     description:
-      "아이 작품 사진 몇 장과 이름만 넣으면, 트렌디한 팝업 전시로. 링크 하나로 온 가족을 초대하세요.",
+      "작품 사진 몇 장과 몇 마디면, 트렌디한 팝업 전시로. 링크 하나로 초대하세요.",
   },
 };
 

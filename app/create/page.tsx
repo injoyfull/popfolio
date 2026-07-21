@@ -4,7 +4,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { MOOD_LIST, COMING_MOODS, DEFAULT_MOOD } from "@/lib/moods";
-import { STYLE_LIST, COMING_STYLES, DEFAULT_STYLE } from "@/lib/styles";
+import {
+  STYLE_LIST,
+  COMING_STYLES,
+  DEFAULT_STYLE,
+  hasStyle,
+} from "@/lib/styles";
 import { prepareImage } from "@/lib/image-client";
 import BrandPage from "@/components/brand/BrandPage";
 import type { MoodId, StyleId, Portfolio } from "@/lib/types";
@@ -62,7 +67,7 @@ export default function CreatePage() {
       id: "preview",
       createdAt: new Date().toISOString(),
       brand: {
-        name: name.trim() || "우리 아이 전시",
+        name: name.trim() || "나의 전시",
         childName: childName.trim() || undefined,
         tagline: tagline.trim(),
         about: about.trim(),
@@ -87,6 +92,16 @@ export default function CreatePage() {
       document.body.style.overflow = "";
     };
   }, [preview]);
+
+  // 랜딩의 "이걸로 시작하기"에서 넘어온 프리셋(?style=&mood=)을 적용.
+  // 마운트 후에 반영해 SSR 하이드레이션 불일치를 피한다.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const s = q.get("style");
+    const m = q.get("mood");
+    if (s && hasStyle(s)) setStyleId(s);
+    if (m && MOOD_LIST.some((x) => x.id === m)) setMood(m as MoodId);
+  }, []);
 
   // 예시 칩에 작가 이름을 끼워 넣어 "내 이야기"처럼 보이게
   const exBase = childName.trim() || "워니";
@@ -210,7 +225,7 @@ export default function CreatePage() {
         <Link href="/" className="font-bold tracking-tight">
           Popfolio
         </Link>
-        <span className="text-sm text-neutral-400">우리 아이 전시 만들기</span>
+        <span className="text-sm text-neutral-400">나만의 전시 만들기</span>
       </header>
 
       <form
@@ -230,7 +245,7 @@ export default function CreatePage() {
             <input
               value={childName}
               onChange={(e) => setChildName(e.target.value)}
-              placeholder="예: 워니 — 우리 아이가 이 전시의 작가예요"
+              placeholder="예: 워니 — 이 전시의 작가예요"
               className="pf-input"
             />
           </Field>
@@ -243,7 +258,7 @@ export default function CreatePage() {
               className="pf-input"
             />
             <span className="mt-1.5 block text-xs text-neutral-400">
-              우리 아이 전시가 열리는 공간의 이름 — 페이지 맨 위에 큰 제목으로
+              전시가 열리는 공간의 이름 — 페이지 맨 위에 큰 제목으로
               걸려요.
             </span>
             <ExampleChips
@@ -449,7 +464,7 @@ export default function CreatePage() {
                   ? "이미지 처리 중…"
                   : dragging
                     ? "여기에 놓으면 올라가요!"
-                    : "아이 작품 사진을 올리거나, 여기로 끌어다 놓으세요"}
+                    : "작품 사진을 올리거나, 여기로 끌어다 놓으세요"}
               </span>
             </button>
           ) : (

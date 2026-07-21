@@ -52,24 +52,24 @@ export default function Home() {
                 className="h-1.5 w-1.5 rounded-full"
                 style={{ background: ACCENT }}
               />
-              우리 아이 팝업 전시
+              나만의 팝업 전시
             </span>
 
             <h1
               className="mt-6 text-5xl leading-[1.05] tracking-tight sm:text-6xl"
               style={{ fontFamily: display, fontWeight: 800 }}
             >
-              우리 아이 첫 개인전,
+              사진첩 속 작품이,
               <br />
-              <span style={{ color: ACCENT }}>60초</span> 만에 열려요.
+              <span style={{ color: ACCENT }}>60초</span> 만에 전시가 됩니다.
             </h1>
 
             <p
               className="mt-6 max-w-[46ch] text-balance break-keep text-lg leading-relaxed"
               style={{ color: INK_SOFT }}
             >
-              사진첩에 묻어두지 마세요. 아이 작품 사진 몇 장과 이름만 넣으면 —
-              트렌디한 팝업 전시로 세워드려요. 링크 하나로 온 가족을 초대하세요.
+              아이가 그린 그림이든, 퇴근 후 만든 작업이든 — 사진 몇 장과 몇
+              마디면 진짜 전시장처럼 세워드려요. 링크 하나로 초대하세요.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -78,7 +78,7 @@ export default function Home() {
                 className="rounded-full px-7 py-3.5 text-base font-semibold text-white shadow-sm transition hover:opacity-90"
                 style={{ background: ACCENT }}
               >
-                우리 아이 전시 열기 →
+                내 전시 열기 →
               </Link>
               <Link
                 href="/p/sample"
@@ -117,7 +117,7 @@ export default function Home() {
               n="01"
               emoji="📷"
               title="올리기"
-              body="아이 작품 사진과 이름만 넣어요. 큰 폰 사진도 알아서 알맞게 줄여드려요."
+              body="작품 사진과 이름만 넣어요. 큰 폰 사진도 알아서 알맞게 줄여드려요."
             />
             <StepCard
               n="02"
@@ -129,7 +129,7 @@ export default function Home() {
               n="03"
               emoji="💌"
               title="초대하기"
-              body="링크 하나로 온 가족을 전시에 초대해요. 새 작품이 생기면 이어서 걸어요."
+              body="링크 하나로 보고 싶은 사람을 초대해요. 새 작품이 생기면 이어서 걸어요."
             />
           </div>
         </div>
@@ -214,6 +214,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 누구의 전시인가요 — 엔진은 하나, 이야기는 사람마다 다르다.
+          각 갈래는 그 사람에게 어울리는 스타일×색감 프리셋을 들고 /create로 간다. */}
+      <section
+        className="border-y"
+        style={{ borderColor: LINE, background: "#fff" }}
+      >
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:px-8 sm:py-24">
+          <SectionHead
+            kicker="WHO'S SHOWING"
+            title="누구의 전시인가요?"
+            sub="작품의 주인이 누구든 상관없어요. 나에게 맞는 곳에서 시작하세요."
+          />
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            <PersonaCard
+              emoji="🎨"
+              who="아이 작품"
+              title="우리 아이 첫 개인전"
+              body="냉장고와 서랍에 쌓이는 그림들. 아이가 '작가'가 되는 순간을 온 가족에게 보여주세요."
+              styleId="wall"
+              mood="pop"
+            />
+            <PersonaCard
+              emoji="🌙"
+              who="내 취미 작업"
+              title="퇴근 후 만든 것들, 흩어지기 전에"
+              body="드로잉·도예·사진… 폴더 속에만 있던 작업을 한 페이지에 정갈하게 걸어둬요."
+              styleId="gallery"
+              mood="minimal"
+            />
+            <PersonaCard
+              emoji="🌳"
+              who="오래 해온 것들"
+              title="평생 해온 것들을 한자리에"
+              body="수십 년의 붓질과 손끝. 가족에게 링크 하나로 남기는 나의 기록."
+              styleId="handwritten"
+              mood="warm"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* 전시처럼, 진짜로 — 라이트박스 체험 */}
       <section style={{ background: INK, color: "#fff" }}>
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 sm:px-8 sm:py-24 lg:grid-cols-2">
@@ -234,7 +275,7 @@ export default function Home() {
             </h2>
             <p className="mt-6 max-w-[42ch] text-balance break-keep text-lg leading-relaxed text-white/70">
               썸네일을 누르면 어두운 전시장에 작품이 중앙으로 떠오르고, 벽 라벨처럼
-              제목이 붙어요. ◀▶로 넘기며 우리 아이 전시를 한 바퀴 — “내 아이가
+              제목이 붙어요. ◀▶로 넘기며 전시를 한 바퀴 — “내가
               작가가 된” 그 느낌.
             </p>
             <Link
@@ -274,7 +315,7 @@ export default function Home() {
         <SectionHead
           kicker="MOODS"
           title="분위기 4가지, 골라서 다시."
-          sub="한 번의 클릭으로 전시 전체가 다른 무드로 리스킨돼요. 우리 아이에게 맞는 톤으로."
+          sub="한 번의 클릭으로 전시 전체가 다른 무드로 리스킨돼요. 작품에 맞는 톤으로."
         />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {MOOD_LIST.map((m) => (
@@ -314,12 +355,12 @@ export default function Home() {
             className="text-4xl leading-tight tracking-tight sm:text-6xl"
             style={{ fontFamily: display, fontWeight: 800 }}
           >
-            우리 아이 첫 개인전,
+            내 전시,
             <br />
             지금 열어주세요.
           </h2>
           <p className="mx-auto mt-6 max-w-[40ch] text-balance break-keep text-lg text-white/85">
-            사진 몇 장이면 충분해요. 냉장고 문에 붙였다 떼는 그림을, 온 가족이
+            사진 몇 장이면 충분해요. 서랍과 폴더에만 있던 작품을, 사람들이
             찾아오는 전시로.
           </p>
           <div className="mt-9 flex flex-col items-center gap-3">
@@ -328,7 +369,7 @@ export default function Home() {
               className="rounded-full bg-white px-8 py-4 text-lg font-bold shadow-sm transition hover:opacity-90"
               style={{ color: ACCENT }}
             >
-              우리 아이 전시 열기 →
+              내 전시 열기 →
             </Link>
             <span className="text-sm text-white/80">로그인 없이 · 무료 · 60초</span>
           </div>
@@ -378,6 +419,62 @@ function SectionHead({
       >
         {sub}
       </p>
+    </div>
+  );
+}
+
+// 분기 카드 — 사람마다 다른 이야기로 말을 걸고, 그에 맞는 프리셋으로 시작시킨다.
+function PersonaCard({
+  emoji,
+  who,
+  title,
+  body,
+  styleId,
+  mood,
+}: {
+  emoji: string;
+  who: string;
+  title: string;
+  body: string;
+  styleId: string;
+  mood: string;
+}) {
+  const preset = `style=${styleId}&mood=${mood}`;
+  return (
+    <div
+      className="flex flex-col rounded-2xl p-7"
+      style={{ background: WALL, border: `1px solid ${LINE}` }}
+    >
+      <span className="text-3xl">{emoji}</span>
+      <span
+        className="mt-3 text-xs font-semibold uppercase tracking-widest"
+        style={{ color: ACCENT }}
+      >
+        {who}
+      </span>
+      <p className="mt-2 break-keep text-xl font-bold leading-snug">{title}</p>
+      <p
+        className="mt-2 flex-1 text-pretty break-keep text-[15px] leading-relaxed"
+        style={{ color: INK_SOFT }}
+      >
+        {body}
+      </p>
+      <div className="mt-6 flex flex-wrap gap-2">
+        <Link
+          href={`/create?${preset}`}
+          className="rounded-full px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+          style={{ background: INK }}
+        >
+          이걸로 시작하기
+        </Link>
+        <Link
+          href={`/p/sample?${preset}`}
+          className="rounded-full px-4 py-2 text-sm font-medium transition hover:bg-black/5"
+          style={{ border: `1px solid ${LINE}` }}
+        >
+          샘플 보기
+        </Link>
+      </div>
     </div>
   );
 }
