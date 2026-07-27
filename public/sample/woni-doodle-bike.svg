@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <!-- 워니의 상상 작품(플레이스홀더) — 파란 펜 두들: 씽씽 자전거 -->
+  <rect width="400" height="500" fill="#FCFBF5"/>
+  <g fill="none" stroke="#2742D6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 바퀴 (일부러 크게) -->
+    <circle cx="112" cy="316" r="64"/>
+    <circle cx="112" cy="316" r="10" fill="#2742D6"/>
+    <circle cx="292" cy="316" r="64"/>
+    <circle cx="292" cy="316" r="10" fill="#2742D6"/>
+    <!-- 프레임 -->
+    <path d="M112 316 L176 224 L262 224 L292 316"/>
+    <path d="M176 224 L206 316 L112 316"/>
+    <path d="M206 316 L292 316"/>
+    <!-- 핸들 -->
+    <path d="M262 224 L252 188 q0 -14 18 -12"/>
+    <!-- 안장 -->
+    <path d="M176 224 L170 192"/>
+    <path d="M148 190 q22 -10 44 0"/>
+    <!-- 페달 -->
+    <path d="M206 316 L224 340"/>
+    <!-- 씽씽 속도선 -->
+    <path d="M44 236 h34M28 268 h42M40 300 h26"/>
+  </g>
+</svg>
