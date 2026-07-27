@@ -16,11 +16,12 @@ export type MoodId =
 // 스타일(레이아웃) 축 — 작품이 한 화면에 "어떻게 담기는가".
 // 색감(MoodId)과 독립적으로 조합된다. (스타일 × 색감)
 export type StyleId =
-  | "gallery" // 원페이지 갤러리 (에디토리얼, 기본)
+  | "gallery" // 원페이지 갤러리 (에디토리얼 지면, 기본)
+  | "index" // 잡지 목차 — 번호·괘선으로 색인
   | "spotlight" // 이름 + 대표작 하나 + 더 보기
-  | "handwritten" // 손글씨 목록 (인벤토리)
+  | "handwritten" // 손글씨 — 소개와 목록을 손으로 쓴 노트처럼
   | "feed" // 인스타 느낌 정사각 그리드
-  | "wall" // 스티커/테이프로 벽에 붙인 느낌
+  | "wall" // 핀보드 — 테이프로 붙인 폴라로이드
   | "pile"; // 자유롭게 겹겹이 쌓임, 호버로 선택
 
 export interface WorkItem {

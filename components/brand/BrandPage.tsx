@@ -11,6 +11,9 @@ import StyleHandwritten from "./styles/StyleHandwritten";
 import StyleFeed from "./styles/StyleFeed";
 import StyleWall from "./styles/StyleWall";
 import StylePile from "./styles/StylePile";
+import StyleIndex from "./styles/StyleIndex";
+
+const HAND = "var(--font-gaegu), var(--font-noto), sans-serif";
 
 // 결과 페이지 — "내 작업 아카이브" (Plan.md §9).
 // 압축된 헤더 + 카테고리 파노라마 갤러리(+전시 라이트박스).
@@ -26,6 +29,8 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
   // 다른 스타일에서는 색감이 팔레트로만 작동해 조합이 깨지지 않는다.
   const isCollage = styleId === "gallery" && portfolio.mood === "collage";
   const isPop = styleId === "gallery" && portfolio.mood === "pop";
+  // 손글씨 스타일 — 소개(히어로)까지 손으로 쓴 노트처럼 렌더한다.
+  const isHandwritten = styleId === "handwritten";
 
   return (
     <main className="pf-root relative min-h-screen" style={style}>
@@ -77,6 +82,37 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
             )}
           </div>
         </section>
+      ) : isHandwritten ? (
+        // 손글씨 소개 — 손편지처럼. (Gaegu 폰트, 서명으로 마무리)
+        <section
+          className="mx-auto max-w-2xl px-6 pb-6 pt-10 sm:px-10 sm:pt-14"
+          style={{ fontFamily: HAND }}
+        >
+          <p className="text-sm tracking-[0.3em] text-[var(--pf-ink-soft)]">
+            ARCHIVE · {year}
+          </p>
+          <h1 className="mt-3 break-keep text-5xl leading-[1.1] sm:text-6xl">
+            {brand.name}
+          </h1>
+          {brand.childName && (
+            <p className="mt-2 text-xl text-[var(--pf-ink-soft)]">
+              작가 · {brand.childName}
+            </p>
+          )}
+          {brand.tagline && (
+            <p className="mt-6 break-keep text-2xl leading-snug text-[var(--pf-ink)] sm:text-3xl">
+              {brand.tagline}
+            </p>
+          )}
+          {brand.about && (
+            <p className="mt-4 max-w-[46ch] break-keep text-xl leading-[1.75] text-[var(--pf-ink-soft)]">
+              {brand.about}
+            </p>
+          )}
+          <p className="mt-7 text-right text-2xl text-[var(--pf-ink)]">
+            — {brand.childName || brand.name}
+          </p>
+        </section>
       ) : (
         <section
           className={`px-6 pt-8 sm:px-10 sm:pt-12 ${
@@ -124,7 +160,9 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
       <div className="border-t border-[var(--pf-line)]" />
 
       {/* 작품 영역 — 선택한 스타일(레이아웃)로 렌더 */}
-      {styleId === "spotlight" ? (
+      {styleId === "index" ? (
+        <StyleIndex works={works} />
+      ) : styleId === "spotlight" ? (
         <StyleSpotlight works={works} />
       ) : styleId === "handwritten" ? (
         <StyleHandwritten works={works} />
