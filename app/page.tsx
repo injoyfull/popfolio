@@ -13,7 +13,8 @@ const SURFACE = "#FFFFFF";
 const INK = "#14120F";
 const INK_SOFT = "#77726A";
 const LINE = "#E3DFD8";
-const ACCENT = "#A6553F"; // 절제된 테라코타 — 강조는 여기까지만
+const ACCENT = "#E8542F"; // 밝은 감빛 — 벽은 조용하되 포인트는 생기 있게
+const MARKER = "#FFDE55"; // 형광펜 하이라이트 (제목 한 단어에만)
 
 const serif = "var(--font-myeongjo), var(--font-noto), serif";
 const mono = "var(--font-grotesk), var(--font-noto), sans-serif";
@@ -64,7 +65,15 @@ export default function Home() {
             >
               흩어져 있던 작품이,
               <br />
-              하나의 전시가 됩니다.
+              하나의{" "}
+              <span
+                style={{
+                  background: `linear-gradient(transparent 58%, ${MARKER} 58%)`,
+                }}
+              >
+                전시
+              </span>
+              가 됩니다.
             </h1>
 
             <p
@@ -79,7 +88,7 @@ export default function Home() {
               <Link
                 href="/create"
                 className="px-7 py-3.5 text-base font-medium text-white transition hover:opacity-85"
-                style={{ background: INK }}
+                style={{ background: ACCENT }}
               >
                 전시 열기
               </Link>
@@ -122,17 +131,17 @@ export default function Home() {
               style={{ background: "#F0EEE9", border: `1px solid ${LINE}` }}
             >
               {[
-                "draw-doodle",
-                "make-objet",
-                "photo-scape",
-                "draw-emoji",
-                "collage-paper",
-                "photo-still",
+                "woni-clay.jpg",
+                "woni-robot.jpg",
+                "woni-paint.jpg",
+                "woni-cookie.jpg",
+                "woni-play.jpg",
+                "woni-racket.jpg",
               ].map((s) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   key={s}
-                  src={`/sample/${s}.svg`}
+                  src={`/sample/${s}`}
                   alt=""
                   className="aspect-square w-full object-cover opacity-45 grayscale"
                 />
@@ -154,9 +163,9 @@ export default function Home() {
               style={{ background: SURFACE, border: `1px solid ${LINE}` }}
             >
               <FramedPiece
-                src="/sample/make-objet.svg"
-                title="Vessel No.1"
-                meta="도자 · 2026"
+                src="/sample/woni-clay.jpg"
+                title="파란 거인"
+                meta="찰흙 · 2026"
               />
             </div>
             <figcaption
@@ -271,12 +280,12 @@ export default function Home() {
               >
                 01 / 09
               </p>
-              <figure className="mt-5 bg-[#F3EFE6]">
+              <figure className="mt-5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/sample/photo-still.svg"
-                  alt="오후의 정물"
-                  className="aspect-[4/5] w-full object-contain p-5"
+                  src="/sample/woni-racket.jpg"
+                  alt="라켓 너머"
+                  className="aspect-[4/5] w-full object-cover"
                 />
               </figure>
               <div className="mt-6 text-center">
@@ -284,16 +293,16 @@ export default function Home() {
                   className="text-[0.7rem] tracking-[0.25em] text-white/35"
                   style={{ fontFamily: mono }}
                 >
-                  STILL LIFE
+                  PLAY
                 </p>
                 <p
                   className="mt-2.5 text-lg"
                   style={{ fontFamily: serif, fontWeight: 700 }}
                 >
-                  오후의 정물
+                  라켓 너머
                 </p>
                 <p className="mt-1.5 text-sm leading-relaxed text-white/50">
-                  창가에 둔 것들을 오래 들여다본 날.
+                  라켓 사이로 보면 세상이 무지개 격자무늬가 돼요.
                 </p>
               </div>
             </div>
@@ -396,7 +405,7 @@ export default function Home() {
             <Link
               href="/create"
               className="inline-block px-9 py-4 text-base font-medium text-white transition hover:opacity-85"
-              style={{ background: INK }}
+              style={{ background: ACCENT }}
             >
               전시 열기
             </Link>
@@ -613,7 +622,7 @@ function FramedPiece({
         <img
           src={src}
           alt={title}
-          className="aspect-[4/5] w-full object-contain"
+          className="aspect-[4/5] w-full object-cover"
         />
       </div>
       <div className="mt-4">
@@ -631,13 +640,13 @@ function FramedPiece({
   );
 }
 
-/** 히어로 — 벽에 두 점이 걸린 모습 */
+/** 히어로 — 벽에 두 점이 걸린 모습 (진짜 아이 작품 사진) */
 function FramedWall() {
   return (
     <div className="relative pb-10 pl-10">
-      {/* 뒤쪽 작은 액자 */}
+      {/* 뒤쪽 작은 액자 — 살짝 기울여 생기를 */}
       <div
-        className="absolute bottom-0 left-0 w-[45%] bg-white p-2.5"
+        className="absolute bottom-0 left-0 w-[45%] rotate-[-4deg] bg-white p-2.5"
         style={{
           border: `1px solid ${LINE}`,
           boxShadow: "0 14px 28px rgba(20,18,15,0.10)",
@@ -645,8 +654,8 @@ function FramedWall() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/sample/photo-scape.svg"
-          alt=""
+          src="/sample/woni-clay.jpg"
+          alt="찰흙 작품"
           className="aspect-square w-full object-cover"
         />
       </div>
@@ -661,22 +670,22 @@ function FramedWall() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/sample/photo-still.svg"
-          alt="오후의 정물"
-          className="aspect-[4/5] w-full object-contain"
+          src="/sample/woni-paint.jpg"
+          alt="초록 손"
+          className="aspect-[4/5] w-full object-cover"
         />
       </div>
 
       {/* 벽 라벨 */}
       <div className="mt-5 pl-1">
         <p className="text-sm" style={{ fontFamily: serif, fontWeight: 700 }}>
-          오후의 정물
+          초록 손
         </p>
         <p
           className="mt-0.5 text-xs tracking-wide"
           style={{ fontFamily: mono, color: INK_SOFT }}
         >
-          사진 · 2026
+          핑거페인팅 · 2026
         </p>
       </div>
     </div>

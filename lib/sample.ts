@@ -3,6 +3,7 @@
 // + 파란 펜 두들(상상 작품, 직접 그린 SVG)로 구성 — 그리고·만들고·노는 아이의
 // 다양한 층위가 한 전시에 쌓이는 모습을 보여준다.
 // 사진은 1600px 리사이즈 + EXIF(위치정보) 제거본.
+// 얼굴이 나오던 사진(로봇·쿠키·낚시·라켓)은 손·작품 클로즈업으로 크롭했다.
 
 import type { Portfolio } from "./types";
 
@@ -81,14 +82,14 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       id: "im_8",
       image: "/sample/woni-play.jpg",
       title: "선물 낚시",
-      description: "긴 장대로 벽에 매달린 선물 잡기. 숨을 참고 겨눠서 성공!",
+      description: "벽에 색테이프로 꾸민 낚시터. 긴 장대로 선물을 하나씩 낚았어요.",
       category: "놀이",
       order: 7,
     },
     {
       id: "im_9",
       image: "/sample/woni-racket.jpg",
-      title: "라켓 너머의 나",
+      title: "라켓 너머",
       description: "라켓 사이로 보면 세상이 무지개 격자무늬가 돼요.",
       category: "놀이",
       order: 8,
