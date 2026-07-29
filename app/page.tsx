@@ -133,9 +133,9 @@ export default function Home() {
               {[
                 "woni-clay.jpg",
                 "woni-robot.jpg",
-                "woni-paint.jpg",
+                "woni-heart.jpg",
                 "woni-cookie.jpg",
-                "woni-play.jpg",
+                "woni-felt.jpg",
                 "woni-racket.jpg",
               ].map((s) => (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -668,24 +668,25 @@ function FramedWall() {
           boxShadow: "0 26px 50px rgba(20,18,15,0.12)",
         }}
       >
+        {/* 가로 작품이라 잘리지 않게 원본 비율 그대로 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/sample/woni-paint.jpg"
-          alt="초록 손"
-          className="aspect-[4/5] w-full object-cover"
+          src="/sample/woni-heart.jpg"
+          alt="실 하트 두 점"
+          className="w-full object-contain"
         />
       </div>
 
       {/* 벽 라벨 */}
       <div className="mt-5 pl-1">
         <p className="text-sm" style={{ fontFamily: serif, fontWeight: 700 }}>
-          초록 손
+          실 하트 두 점
         </p>
         <p
           className="mt-0.5 text-xs tracking-wide"
           style={{ fontFamily: mono, color: INK_SOFT }}
         >
-          핑거페인팅 · 2026
+          실 공예 · 2026
         </p>
       </div>
     </div>

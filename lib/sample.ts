@@ -1,5 +1,5 @@
 // 결과 페이지를 입력·저장 없이 눈으로 확인하기 위한 샘플 데이터.
-// 일곱 살 '워니'의 실제 활동 사진(찰흙·핑거페인팅·로봇·쿠키·낚시놀이·배드민턴)
+// 일곱 살 '워니'의 실제 활동 사진(찰흙·로봇·쿠키·실공예·양털·낚시놀이·배드민턴)
 // + 파란 펜 두들(상상 작품, 직접 그린 SVG)로 구성 — 그리고·만들고·노는 아이의
 // 다양한 층위가 한 전시에 쌓이는 모습을 보여준다.
 // 사진은 1600px 리사이즈 + EXIF(위치정보) 제거본.
@@ -15,7 +15,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
     childName: "워니",
     tagline: "일곱 살, 매일 그리고 만드는 중",
     about:
-      "그리기도, 만들기도, 몸으로 노는 것도 다 작품이 되는 일곱 살이에요. 손에 물감을 묻히는 날을 제일 좋아해요. 새 작품이 생길 때마다 여기에 한 점씩 걸어둡니다.",
+      "그리기도, 만들기도, 몸으로 노는 것도 다 작품이 되는 일곱 살이에요. 손으로 조물조물 만드는 날을 제일 좋아해요. 새 작품이 생길 때마다 여기에 한 점씩 걸어둡니다.",
   },
   mood: "vivid",
   items: [
@@ -44,14 +44,21 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       category: "만들기",
       order: 2,
     },
-    // 그림
     {
       id: "im_4",
-      image: "/sample/woni-paint.jpg",
-      title: "초록 손",
-      description: "붓 대신 손으로 그리는 날. 초록은 여름 나무 냄새가 나는 색이래요.",
-      category: "그림",
+      image: "/sample/woni-heart.jpg",
+      title: "실 하트 두 점",
+      description: "실을 한 줄씩 돌려 붙여 만든 하트. 분홍은 나, 파랑은 동생 거예요.",
+      category: "만들기",
       order: 3,
+    },
+    {
+      id: "im_10",
+      image: "/sample/woni-felt.jpg",
+      title: "분홍 토끼",
+      description: "양털을 콕콕 찔러 뭉치면 단단해져요. 손바닥에 딱 맞는 크기.",
+      category: "만들기",
+      order: 4,
     },
     {
       id: "im_5",
@@ -59,7 +66,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       title: "우리 집",
       description: "파란 펜 하나로 그린 우리 집. 굴뚝 연기가 꼬불꼬불 올라가요.",
       category: "그림",
-      order: 4,
+      order: 5,
     },
     {
       id: "im_6",
@@ -67,7 +74,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       title: "씽씽 자전거",
       description: "바퀴를 크게 그려야 더 빨리 달릴 것 같아서 아주 크게 그렸대요.",
       category: "그림",
-      order: 5,
+      order: 6,
     },
     {
       id: "im_7",
@@ -75,7 +82,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       title: "출발, 로켓!",
       description: "연기가 빙글빙글 꼬이면서 올라가는 게 이 그림의 포인트예요.",
       category: "그림",
-      order: 6,
+      order: 7,
     },
     // 놀이
     {
@@ -84,7 +91,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       title: "선물 낚시",
       description: "벽에 색테이프로 꾸민 낚시터. 긴 장대로 선물을 하나씩 낚았어요.",
       category: "놀이",
-      order: 7,
+      order: 8,
     },
     {
       id: "im_9",
@@ -92,7 +99,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       title: "라켓 너머",
       description: "라켓 사이로 보면 세상이 무지개 격자무늬가 돼요.",
       category: "놀이",
-      order: 8,
+      order: 9,
     },
   ],
 };
