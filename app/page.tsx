@@ -34,13 +34,20 @@ export default function Home() {
           >
             Popfolio
           </span>
-          <nav className="flex items-center gap-6 text-sm">
+          <nav className="flex items-center gap-5 text-sm sm:gap-6">
             <Link
               href="/p/sample"
               className="underline-offset-4 transition hover:underline"
               style={{ color: INK_SOFT }}
             >
               샘플 전시
+            </Link>
+            <Link
+              href="/mine"
+              className="underline-offset-4 transition hover:underline"
+              style={{ color: INK_SOFT }}
+            >
+              내 전시
             </Link>
             <Link
               href="/create"

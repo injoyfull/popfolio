@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { rememberMine } from "@/lib/my-exhibitions";
 
 // 소유자(편집키 보유)에게만 보이는 관리 UI.
 // - 방금 만든 경우: 공유/편집 링크를 저장하라는 안내 카드
@@ -10,16 +11,24 @@ export default function OwnerBar({
   id,
   editKey,
   justCreated,
+  name,
 }: {
   id: string;
   editKey: string;
   justCreated: boolean;
+  /** 전시공간 이름 — "내 전시" 목록에 표시 */
+  name: string;
 }) {
   const [showCard, setShowCard] = useState(justCreated);
 
   // origin은 마운트 후에 채운다 (SSR/클라이언트 hydration 불일치 방지)
   const [origin, setOrigin] = useState("");
   useEffect(() => setOrigin(window.location.origin), []);
+
+  // 편집 링크로 열 때마다 이 기기에 기록 — 링크를 잃어버려도 /mine 에서 찾게.
+  useEffect(() => {
+    rememberMine({ id, name, editKey });
+  }, [id, name, editKey]);
 
   const shareUrl = `${origin}/p/${id}`;
   const editUrl = `${origin}/p/${id}?k=${editKey}`;
@@ -51,7 +60,7 @@ export default function OwnerBar({
             className="w-full max-w-md rounded-2xl bg-white p-6 text-neutral-900 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-lg font-bold">완성됐어요! 🎉</p>
+            <p className="text-lg font-bold">전시가 열렸어요! 🎉</p>
             <p className="mt-2 text-sm leading-relaxed text-neutral-600">
               두 개의 링크가 있어요. <b>공유 링크</b>는 가족·지인에게 보내고,{" "}
               <b>편집 링크</b>는 나만 저장해 두세요 — 나중에 작품을 이어 올릴 때 써요.
@@ -65,6 +74,15 @@ export default function OwnerBar({
                 warn
               />
             </div>
+
+            <p className="mt-4 rounded-lg bg-neutral-50 px-3 py-2.5 text-xs leading-relaxed text-neutral-500">
+              이 기기에도 자동으로 저장해 뒀어요 —{" "}
+              <Link href="/mine" className="font-semibold underline">
+                내 전시
+              </Link>{" "}
+              에서 다시 찾을 수 있어요. 다른 기기에서도 열려면 편집 링크를 꼭
+              보관하세요.
+            </p>
 
             <div className="mt-6 flex items-center justify-between">
               <Link

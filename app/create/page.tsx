@@ -11,6 +11,7 @@ import {
   hasStyle,
 } from "@/lib/styles";
 import { prepareImage } from "@/lib/image-client";
+import { rememberMine } from "@/lib/my-exhibitions";
 import BrandPage from "@/components/brand/BrandPage";
 import type { MoodId, StyleId, Portfolio } from "@/lib/types";
 
@@ -211,6 +212,8 @@ export default function CreatePage() {
         throw new Error(data?.error ?? "저장에 실패했어요. 다시 시도해 주세요.");
       }
       const { id, editKey } = await res.json();
+      // 편집 링크를 잃어버려도 /mine 에서 찾을 수 있게 이 기기에 먼저 기록
+      if (editKey) rememberMine({ id, name: name.trim(), editKey });
       const suffix = editKey ? `?created=1&k=${encodeURIComponent(editKey)}` : "";
       router.push(`/p/${id}${suffix}`);
     } catch (err) {

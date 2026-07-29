@@ -43,7 +43,12 @@ export default async function PortfolioPage({
     <>
       <BrandPage portfolio={portfolio} />
       {isOwner && (
-        <OwnerBar id={id} editKey={k!} justCreated={created === "1"} />
+        <OwnerBar
+          id={id}
+          editKey={k!}
+          justCreated={created === "1"}
+          name={portfolio.brand.name}
+        />
       )}
     </>
   );
