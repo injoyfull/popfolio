@@ -640,53 +640,60 @@ function FramedPiece({
   );
 }
 
-/** 히어로 — 벽에 두 점이 걸린 모습 (진짜 아이 작품 사진) */
+/**
+ * 히어로 — 살롱 행잉(갤러리 월).
+ * 크기가 제각각인 여섯 점을 벽에 나란히 건 모습. 한 점씩 보여주는 대신
+ * "전시가 이렇게 걸린다"를 한눈에 보여준다.
+ */
+// 크기가 제각각인 여섯 점 — 매스너리 컬럼으로 흘려 액자 아래 빈틈이 생기지 않게 한다.
+const WALL_PIECES = [
+  { src: "woni-heart.jpg", ratio: "aspect-[5/4]" },
+  { src: "woni-cookie.jpg", ratio: "aspect-square" },
+  { src: "woni-racket.jpg", ratio: "aspect-[4/5]" },
+  { src: "woni-clay.jpg", ratio: "aspect-[4/5]" },
+  { src: "woni-felt.jpg", ratio: "aspect-[4/3]" },
+  { src: "woni-robot.jpg", ratio: "aspect-square" },
+];
+
 function FramedWall() {
   return (
-    <div className="relative pb-10 pl-10">
-      {/* 뒤쪽 작은 액자 — 살짝 기울여 생기를 */}
-      <div
-        className="absolute bottom-0 left-0 w-[45%] rotate-[-4deg] bg-white p-2.5"
-        style={{
-          border: `1px solid ${LINE}`,
-          boxShadow: "0 14px 28px rgba(20,18,15,0.10)",
-        }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/sample/woni-clay.jpg"
-          alt="찰흙 작품"
-          className="aspect-square w-full object-cover"
-        />
+    <div>
+      {/* 걸이 레일 — 전시장 벽 느낌의 얇은 선 */}
+      <div className="mb-5 h-px w-full" style={{ background: LINE }} />
+
+      <div className="columns-2 gap-3 sm:gap-4 [column-fill:balance]">
+        {WALL_PIECES.map((p, i) => (
+          <figure
+            key={p.src}
+            className="mb-3 break-inside-avoid bg-white p-1.5 sm:mb-4 sm:p-2"
+            style={{
+              border: `1px solid ${LINE}`,
+              boxShadow:
+                i === 0
+                  ? "0 18px 34px rgba(20,18,15,0.12)"
+                  : "0 10px 20px rgba(20,18,15,0.08)",
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/sample/${p.src}`}
+              alt=""
+              className={`${p.ratio} w-full object-cover`}
+            />
+          </figure>
+        ))}
       </div>
 
-      {/* 앞쪽 큰 액자 */}
-      <div
-        className="relative bg-white p-5"
-        style={{
-          border: `1px solid ${LINE}`,
-          boxShadow: "0 26px 50px rgba(20,18,15,0.12)",
-        }}
-      >
-        {/* 가로 작품이라 잘리지 않게 원본 비율 그대로 */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/sample/woni-heart.jpg"
-          alt="실 하트 두 점"
-          className="w-full object-contain"
-        />
-      </div>
-
-      {/* 벽 라벨 */}
-      <div className="mt-5 pl-1">
+      {/* 벽 라벨 — 전시 전체를 가리키는 한 줄 */}
+      <div className="mt-5 flex items-baseline justify-between">
         <p className="text-sm" style={{ fontFamily: serif, fontWeight: 700 }}>
-          실 하트 두 점
+          워니의 작업실
         </p>
         <p
-          className="mt-0.5 text-xs tracking-wide"
+          className="text-xs tracking-wide"
           style={{ fontFamily: mono, color: INK_SOFT }}
         >
-          실 공예 · 2026
+          10 WORKS · 2026
         </p>
       </div>
     </div>
