@@ -17,6 +17,7 @@ export type MoodId =
 // 색감(MoodId)과 독립적으로 조합된다. (스타일 × 색감)
 export type StyleId =
   | "gallery" // 원페이지 갤러리 (에디토리얼 지면, 기본)
+  | "timeline" // 연대기 — 해마다 쌓이는 기록
   | "index" // 잡지 목차 — 번호·괘선으로 색인
   | "spotlight" // 이름 + 대표작 하나 + 더 보기
   | "handwritten" // 손글씨 — 소개와 목록을 손으로 쓴 노트처럼
@@ -38,7 +39,26 @@ export interface WorkItem {
   caption?: string;
   /** 카테고리(작품 묶음) 이름. 없으면 기본 묶음으로 취급 */
   category?: string;
+  /**
+   * 작품을 만든 날 (YYYY-MM-DD). 사진 EXIF 촬영일에서 자동으로 채운다.
+   * 아카이브가 해를 넘겨 쌓일 때 "언제 그린 그림인지"를 되짚는 시간 축.
+   */
+  date?: string;
   order: number;
+}
+
+/** 작품의 연도 (없으면 undefined) */
+export function workYear(w: WorkItem): number | undefined {
+  const y = w.date?.slice(0, 4);
+  const n = y ? Number(y) : NaN;
+  return Number.isFinite(n) && n > 1900 ? n : undefined;
+}
+
+/** "2026년 7월" 처럼 사람이 읽는 표기 */
+export function formatWorkDate(date?: string): string | undefined {
+  const m = date?.match(/^(\d{4})-(\d{2})(?:-(\d{2}))?$/);
+  if (!m) return undefined;
+  return `${m[1]}년 ${Number(m[2])}월`;
 }
 
 /** 카테고리 없는 작품을 담는 기본 묶음 라벨 */

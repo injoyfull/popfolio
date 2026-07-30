@@ -12,6 +12,7 @@ import StyleFeed from "./styles/StyleFeed";
 import StyleWall from "./styles/StyleWall";
 import StylePile from "./styles/StylePile";
 import StyleIndex from "./styles/StyleIndex";
+import StyleTimeline from "./styles/StyleTimeline";
 
 const HAND = "var(--font-gaegu), var(--font-noto), sans-serif";
 
@@ -160,7 +161,9 @@ export default function BrandPage({ portfolio }: { portfolio: Portfolio }) {
       <div className="border-t border-[var(--pf-line)]" />
 
       {/* 작품 영역 — 선택한 스타일(레이아웃)로 렌더 */}
-      {styleId === "index" ? (
+      {styleId === "timeline" ? (
+        <StyleTimeline works={works} />
+      ) : styleId === "index" ? (
         <StyleIndex works={works} />
       ) : styleId === "spotlight" ? (
         <StyleSpotlight works={works} />

@@ -38,6 +38,7 @@ export async function buildWorkItems(
   const descriptions = form.getAll("description").map((v) => String(v));
   const captions = form.getAll("caption").map((v) => String(v)); // 구 클라이언트 호환
   const categories = form.getAll("category").map((v) => String(v));
+  const dates = form.getAll("date").map((v) => String(v));
 
   const items: WorkItem[] = [];
   for (let i = 0; i < images.length; i++) {
@@ -52,6 +53,10 @@ export async function buildWorkItems(
       title: ((titles[i] ?? "").trim() || (captions[i] ?? "").trim()) || undefined,
       description: (descriptions[i] ?? "").trim() || undefined,
       category: (categories[i] ?? "").trim() || undefined,
+      // YYYY-MM-DD 형식만 통과시킨다
+      date: /^\d{4}-\d{2}-\d{2}$/.test((dates[i] ?? "").trim())
+        ? dates[i].trim()
+        : undefined,
       order: i,
     });
   }

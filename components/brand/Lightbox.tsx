@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { DEFAULT_CATEGORY, workTitle, type WorkItem } from "@/lib/types";
+import {
+  DEFAULT_CATEGORY,
+  formatWorkDate,
+  workTitle,
+  type WorkItem,
+} from "@/lib/types";
 
 // 전시 라이트박스 — 어두운 전시장에 작품을 스포트라이트로 띄우고 벽 라벨을 붙인다.
 // 모든 스타일(갤러리·피드·스티커 월·겹겹이…)이 "클릭 → 확대"를 이 컴포넌트로 공유한다.
@@ -80,6 +85,12 @@ export default function WorkLightbox({
       >
         <p className="text-xs font-medium tracking-[0.25em] text-neutral-500">
           {(current.category?.trim() || DEFAULT_CATEGORY).toUpperCase()}
+          {formatWorkDate(current.date) && (
+            <span className="text-neutral-600">
+              {" · "}
+              {formatWorkDate(current.date)}
+            </span>
+          )}
         </p>
         <p className="mx-auto mt-2 max-w-[46ch] break-keep text-lg font-semibold text-neutral-100 sm:text-xl">
           {workTitle(current) ?? "무제"}

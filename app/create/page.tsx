@@ -23,6 +23,7 @@ interface Draft {
   title: string;
   description: string;
   category: string;
+  date: string;
 }
 
 let draftSeq = 0;
@@ -81,6 +82,7 @@ export default function CreatePage() {
         title: d.title.trim() || undefined,
         description: d.description.trim() || undefined,
         category: d.category.trim() || undefined,
+        date: d.date || undefined,
         order: i,
       })),
     };
@@ -141,6 +143,7 @@ export default function CreatePage() {
             title: "",
             description: "",
             category: "",
+            date: p.takenAt ?? "",
           } satisfies Draft;
         }),
       );
@@ -173,7 +176,7 @@ export default function CreatePage() {
 
   function patch(
     key: string,
-    field: "title" | "description" | "category",
+    field: "title" | "description" | "category" | "date",
     value: string,
   ) {
     setDrafts((prev) =>
@@ -202,6 +205,7 @@ export default function CreatePage() {
         fd.append("title", d.title);
         fd.append("description", d.description);
         fd.append("category", d.category);
+        fd.append("date", d.date);
       }
       const res = await fetch("/api/portfolios", {
         method: "POST",
@@ -499,6 +503,20 @@ export default function CreatePage() {
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
                     />
 
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-xs text-neutral-400">만든 날:</span>
+                      <input
+                        type="date"
+                        value={d.date}
+                        onChange={(e) => patch(d.key, "date", e.target.value)}
+                        className="rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-xs outline-none focus:border-neutral-500"
+                      />
+                      {d.date && (
+                        <span className="text-[0.68rem] text-neutral-400">
+                          사진에서 자동으로 읽었어요
+                        </span>
+                      )}
+                    </div>
                     {/* 카테고리 — 눌러서 고르기 (타이핑 최소화) */}
                     <div className="flex flex-wrap items-center gap-1.5">
                       <span className="text-xs text-neutral-400">묶음:</span>

@@ -26,6 +26,13 @@ export const STYLES: Record<StyleId, StyleMeta> = {
     desc: "잡지 지면처럼 작품과 라벨이 한 페이지에 정갈하게.",
     descEn: "Works and labels laid out like an editorial spread.",
   },
+  timeline: {
+    id: "timeline",
+    ko: "연대기",
+    en: "Timeline",
+    desc: "해마다 작품이 쌓이는 기록. 시간이 지날수록 두꺼워져요.",
+    descEn: "Works stack up year by year — it grows as time passes.",
+  },
   index: {
     id: "index",
     ko: "목차",
@@ -73,6 +80,7 @@ export const STYLES: Record<StyleId, StyleMeta> = {
 // 정갈한 → 손맛 나는 순서로.
 export const STYLE_LIST: StyleMeta[] = [
   STYLES.gallery,
+  STYLES.timeline,
   STYLES.index,
   STYLES.spotlight,
   STYLES.handwritten,
