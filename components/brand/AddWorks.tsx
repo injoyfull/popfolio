@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { prepareImage } from "@/lib/image-client";
+import RefineButton from "@/components/RefineButton";
 
 interface Draft {
   key: string;
@@ -245,8 +246,13 @@ export default function AddWorks({
                       onChange={(e) =>
                         patch(d.key, "description", e.target.value)
                       }
-                      placeholder="이 작품에 담긴 이야기 (예: 비 온 뒤 숲이 제일 예쁘대요)"
+                      placeholder="이 작품에 담긴 이야기 — 아이가 한 말 그대로도 좋아요"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
+                    />
+                    <RefineButton
+                      value={d.description}
+                      onChange={(v) => patch(d.key, "description", v)}
+                      kind="work"
                     />
 
                     <div className="flex flex-wrap items-center gap-1.5">

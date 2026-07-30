@@ -1,5 +1,5 @@
 // 결과 페이지를 입력·저장 없이 눈으로 확인하기 위한 샘플 데이터.
-// 일곱 살 '워니'의 실제 활동 사진(찰흙·로봇·쿠키·실공예·양털·낚시놀이·배드민턴)
+// 일곱 살 '워니'의 실제 활동 사진(찰흙·로봇·쿠키·실공예·양털·클레이 정원·낚시놀이·배드민턴)
 // + 파란 펜 두들(상상 작품, 직접 그린 SVG)로 구성 — 그리고·만들고·노는 아이의
 // 다양한 층위가 한 전시에 쌓이는 모습을 보여준다.
 // 사진은 1600px 리사이즈 + EXIF(위치정보) 제거본.
@@ -66,13 +66,33 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       order: 4,
     },
     {
+      id: "im_11",
+      image: "/sample/woni-garden.jpg",
+      title: "분홍 정원",
+      date: "2026-07-30",
+      description:
+        "면봉을 심으면 꽃이 돼요. 시든 꽃도 분홍 나라에 다시 심어 줬어요.",
+      category: "만들기",
+      order: 5,
+    },
+    {
+      id: "im_12",
+      image: "/sample/woni-village.jpg",
+      title: "계란판 마을",
+      date: "2026-07-30",
+      description:
+        "계란판 한 칸이 집 한 채예요. 이끼 숲도 있고, 폭발 직전인 화산도 있어요.",
+      category: "만들기",
+      order: 6,
+    },
+    {
       id: "im_5",
       image: "/sample/woni-doodle-house.svg",
       title: "우리 집",
       date: "2024-09-05",
       description: "파란 펜 하나로 그린 우리 집. 굴뚝 연기가 꼬불꼬불 올라가요.",
       category: "그림",
-      order: 5,
+      order: 7,
     },
     {
       id: "im_6",
@@ -81,7 +101,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       date: "2024-07-21",
       description: "바퀴를 크게 그려야 더 빨리 달릴 것 같아서 아주 크게 그렸대요.",
       category: "그림",
-      order: 6,
+      order: 8,
     },
     {
       id: "im_7",
@@ -90,7 +110,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       date: "2026-03-11",
       description: "연기가 빙글빙글 꼬이면서 올라가는 게 이 그림의 포인트예요.",
       category: "그림",
-      order: 7,
+      order: 9,
     },
     // 놀이
     {
@@ -100,7 +120,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       date: "2025-12-24",
       description: "벽에 색테이프로 꾸민 낚시터. 긴 장대로 선물을 하나씩 낚았어요.",
       category: "놀이",
-      order: 8,
+      order: 10,
     },
     {
       id: "im_9",
@@ -109,7 +129,7 @@ export const SAMPLE_PORTFOLIO: Portfolio = {
       date: "2026-04-27",
       description: "라켓 사이로 보면 세상이 무지개 격자무늬가 돼요.",
       category: "놀이",
-      order: 9,
+      order: 11,
     },
   ],
 };

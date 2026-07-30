@@ -700,7 +700,7 @@ function FramedWall() {
           className="text-xs tracking-wide"
           style={{ fontFamily: mono, color: INK_SOFT }}
         >
-          10 WORKS · 2026
+          12 WORKS · 2026
         </p>
       </div>
     </div>

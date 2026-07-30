@@ -13,6 +13,7 @@ import {
 import { prepareImage } from "@/lib/image-client";
 import { rememberMine } from "@/lib/my-exhibitions";
 import BrandPage from "@/components/brand/BrandPage";
+import RefineButton from "@/components/RefineButton";
 import type { MoodId, StyleId, Portfolio } from "@/lib/types";
 
 interface Draft {
@@ -239,11 +240,12 @@ export default function CreatePage() {
         onSubmit={handleSubmit}
         className="mx-auto max-w-2xl px-6 py-10 sm:py-14"
       >
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          작품 몇 개랑, 몇 마디만.
+        <h1 className="break-keep text-2xl font-bold tracking-tight sm:text-3xl">
+          오늘부터, 작가입니다.
         </h1>
-        <p className="mt-2 text-neutral-500">
-          나머지 근사하게 세우는 건 Popfolio가 알아서 할게요.
+        <p className="mt-2 max-w-[46ch] break-keep leading-relaxed text-neutral-500">
+          처음 그려본 아크릴 한 점도, 아이의 낙서 한 장도 누군가에겐 전부
+          소중한 작품이에요. 부끄러워도 괜찮아요 — 한 점씩, 정성껏 걸어봐요.
         </p>
 
         {/* 기본 정보 */}
@@ -295,6 +297,7 @@ export default function CreatePage() {
               ]}
               onPick={setTagline}
             />
+            <RefineButton value={tagline} onChange={setTagline} kind="tagline" />
           </Field>
 
           <Field label="작가 소개 · About (몇 살, 뭘 좋아하는지)">
@@ -313,6 +316,7 @@ export default function CreatePage() {
               ]}
               onPick={setAbout}
             />
+            <RefineButton value={about} onChange={setAbout} kind="about" />
           </Field>
         </section>
 
@@ -499,8 +503,13 @@ export default function CreatePage() {
                       onChange={(e) =>
                         patch(d.key, "description", e.target.value)
                       }
-                      placeholder="이 작품에 담긴 이야기 (예: 비 온 뒤 숲이 제일 예쁘대요)"
+                      placeholder="이 작품에 담긴 이야기 — 아이가 한 말 그대로도 좋아요"
                       className="w-full rounded-md border border-neutral-200 px-2 py-1.5 text-sm outline-none focus:border-neutral-500"
+                    />
+                    <RefineButton
+                      value={d.description}
+                      onChange={(v) => patch(d.key, "description", v)}
+                      kind="work"
                     />
 
                     <div className="flex flex-wrap items-center gap-1.5">
