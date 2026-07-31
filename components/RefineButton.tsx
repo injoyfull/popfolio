@@ -38,6 +38,8 @@ export default function RefineButton({
   const [enabled, setEnabled] = useState(false);
   const [busy, setBusy] = useState(false);
   const [original, setOriginal] = useState<string | null>(null);
+  const [refinedOut, setRefinedOut] = useState<string | null>(null);
+  const [unchanged, setUnchanged] = useState(false);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
@@ -48,10 +50,16 @@ export default function RefineButton({
     };
   }, []);
 
-  // 다듬은 뒤 사용자가 글을 다시 고치면 "원래대로"는 의미가 없어지므로 접는다.
+  // 다듬은 결과를 사용자가 직접 고치기 시작하면 원문 비교·되돌리기는 접는다
+  // (그때부터는 '원래대로'가 방금 쓴 손질까지 날려버리므로).
   useEffect(() => {
     setFailed(false);
-  }, [value]);
+    setUnchanged(false);
+    if (refinedOut !== null && value !== refinedOut) {
+      setOriginal(null);
+      setRefinedOut(null);
+    }
+  }, [value, refinedOut]);
 
   if (!enabled) return null;
 
@@ -69,7 +77,13 @@ export default function RefineButton({
       });
       const data = await res.json().catch(() => null);
       if (!res.ok || !data?.refined) throw new Error();
+      // 고칠 게 없으면 억지로 바꾸지 않는다 — 그대로 두었다고 알려준다.
+      if (data.refined.trim() === value.trim()) {
+        setUnchanged(true);
+        return;
+      }
       setOriginal(value);
+      setRefinedOut(data.refined);
       onChange(data.refined);
     } catch {
       setFailed(true);
@@ -82,6 +96,7 @@ export default function RefineButton({
     if (original === null) return;
     onChange(original);
     setOriginal(null);
+    setRefinedOut(null);
   }
 
   return (
@@ -109,9 +124,22 @@ export default function RefineButton({
           지금은 다듬기가 어려워요 — 잠시 후 다시 눌러 주세요.
         </span>
       )}
-      {!failed && original === null && (
+      {unchanged && (
+        <span className="text-[0.68rem] text-neutral-400">
+          이미 자연스러워요 — 그대로 두었어요.
+        </span>
+      )}
+      {!failed && !unchanged && original === null && (
         <span className="hidden text-[0.68rem] text-neutral-400 sm:inline">
           내 글은 그대로, 문장만 정돈해요
+        </span>
+      )}
+
+      {/* 무엇이 바뀌었는지 눈으로 확인할 수 있게 원문을 남겨둔다.
+          "AI가 내 아이 말을 바꿔놨을까" 하는 불안이 버튼을 못 누르게 하므로. */}
+      {original !== null && (
+        <span className="mt-0.5 block w-full basis-full break-keep text-[0.68rem] leading-relaxed text-neutral-400">
+          원래 쓴 글 <span className="text-neutral-500">{original}</span>
         </span>
       )}
     </span>
