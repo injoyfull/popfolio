@@ -138,12 +138,12 @@ export default function Home() {
               style={{ background: "#F0EEE9", border: `1px solid ${LINE}` }}
             >
               {[
-                "woni-clay.jpg",
-                "woni-robot.jpg",
-                "woni-heart.jpg",
-                "woni-cookie.jpg",
-                "woni-felt.jpg",
-                "woni-racket.jpg",
+                "joy-clay.jpg",
+                "joy-robot.jpg",
+                "joy-heart.jpg",
+                "joy-cookie.jpg",
+                "joy-felt.jpg",
+                "joy-racket.jpg",
               ].map((s) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -170,7 +170,7 @@ export default function Home() {
               style={{ background: SURFACE, border: `1px solid ${LINE}` }}
             >
               <FramedPiece
-                src="/sample/woni-clay.jpg"
+                src="/sample/joy-clay.jpg"
                 title="파란 거인"
                 meta="찰흙 · 2026"
               />
@@ -290,7 +290,7 @@ export default function Home() {
               <figure className="mt-5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/sample/woni-racket.jpg"
+                  src="/sample/joy-racket.jpg"
                   alt="라켓 너머"
                   className="aspect-[4/5] w-full object-cover"
                 />
@@ -654,12 +654,12 @@ function FramedPiece({
  */
 // 크기가 제각각인 여섯 점 — 매스너리 컬럼으로 흘려 액자 아래 빈틈이 생기지 않게 한다.
 const WALL_PIECES = [
-  { src: "woni-heart.jpg", ratio: "aspect-[5/4]" },
-  { src: "woni-cookie.jpg", ratio: "aspect-square" },
-  { src: "woni-racket.jpg", ratio: "aspect-[4/5]" },
-  { src: "woni-clay.jpg", ratio: "aspect-[4/5]" },
-  { src: "woni-felt.jpg", ratio: "aspect-[4/3]" },
-  { src: "woni-robot.jpg", ratio: "aspect-square" },
+  { src: "joy-heart.jpg", ratio: "aspect-[5/4]" },
+  { src: "joy-cookie.jpg", ratio: "aspect-square" },
+  { src: "joy-racket.jpg", ratio: "aspect-[4/5]" },
+  { src: "joy-clay.jpg", ratio: "aspect-[4/5]" },
+  { src: "joy-felt.jpg", ratio: "aspect-[4/3]" },
+  { src: "joy-robot.jpg", ratio: "aspect-square" },
 ];
 
 function FramedWall() {
@@ -694,7 +694,7 @@ function FramedWall() {
       {/* 벽 라벨 — 전시 전체를 가리키는 한 줄 */}
       <div className="mt-5 flex items-baseline justify-between">
         <p className="text-sm" style={{ fontFamily: serif, fontWeight: 700 }}>
-          워니의 작업실
+          JOY's World
         </p>
         <p
           className="text-xs tracking-wide"

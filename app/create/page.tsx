@@ -108,7 +108,7 @@ export default function CreatePage() {
   }, []);
 
   // 예시 칩에 작가 이름을 끼워 넣어 "내 이야기"처럼 보이게
-  const exBase = childName.trim() || "워니";
+  const exBase = childName.trim() || "쪼이";
 
   // 카테고리 기본 선택지 — 아이 작품에서 가장 흔한 묶음. 타이핑 대신 눌러서 고른다.
   const categoryOptions = ["그림", "만들기", "사진", "오려붙이기", "글씨"];
@@ -254,7 +254,7 @@ export default function CreatePage() {
             <input
               value={childName}
               onChange={(e) => setChildName(e.target.value)}
-              placeholder="예: 워니 — 이 전시의 작가예요"
+              placeholder="예: 쪼이 — 이 전시의 작가예요"
               className="pf-input"
             />
           </Field>

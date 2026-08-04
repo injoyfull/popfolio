@@ -91,7 +91,7 @@ export default function InjoyfullPage() {
           style={{ background: SURFACE, borderColor: LINE }}
         >
           <span className="grid grid-cols-3 gap-2">
-            {["woni-garden.jpg", "woni-clay.jpg", "woni-village.jpg"].map(
+            {["joy-garden.jpg", "joy-clay.jpg", "joy-village.jpg"].map(
               (f) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -107,7 +107,7 @@ export default function InjoyfullPage() {
             className="mt-3 flex items-center justify-between text-xs"
             style={{ fontFamily: mono, color: INK_SOFT }}
           >
-            <span>워니의 작업실 · 12 WORKS · 2024–2026</span>
+            <span>JOY's World · 12 WORKS · 2024–2026</span>
             <span style={{ color: ACCENT }}>샘플 전시 보기 →</span>
           </span>
         </Link>
