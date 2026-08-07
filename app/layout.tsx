@@ -6,6 +6,7 @@ import {
   Jua,
   Gaegu,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // 본문 + 디스플레이 · 기본 산세리프 (한글·라틴 지원, 다국어 확장 대비)
@@ -83,7 +84,12 @@ export default function RootLayout({
       lang="ko"
       className={`${notoSansKr.variable} ${nanumMyeongjo.variable} ${spaceGrotesk.variable} ${jua.variable} ${gaegu.variable} h-full antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        {children}
+        {/* 방문 통계 — 8월 인조이풀 파일럿에서 "몇 분이 들어와 실제로 전시를
+            열었는지"를 알기 위해. 쿠키를 쓰지 않고 개인 식별 정보도 남기지 않는다. */}
+        <Analytics />
+      </body>
     </html>
   );
 }

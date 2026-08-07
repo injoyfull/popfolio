@@ -44,7 +44,7 @@ export default function InjoyfullPage() {
             className="px-3 py-1 text-xs font-semibold tracking-wide"
             style={{ background: MARKER, color: INK }}
           >
-            인조이풀 친구들 먼저
+            인조이풀 가족 선물
           </span>
         </div>
       </header>
@@ -79,9 +79,17 @@ export default function InjoyfullPage() {
         >
           안녕하세요, 인조이풀입니다. 수업에서 아이들이 만든 작품, 집에 쌓여
           가는 그림들 — 사진만 있으면 아이만의 온라인 전시장이 생기는{" "}
-          <b style={{ color: INK }}>Popfolio</b>를 인조이풀 가족들께 가장 먼저
-          열어드려요. 지금은 <b style={{ color: INK }}>전부 무료</b>이고,
-          회원가입도 앱 설치도 필요 없습니다.
+          <b style={{ color: INK }}>Popfolio</b>를 센터에 함께해 주시는
+          어머니들께 <b style={{ color: INK }}>작은 선물</b>로 먼저
+          열어드립니다. 회원가입도, 앱 설치도, 비용도 없어요.
+        </p>
+        <p
+          className="mt-4 break-keep border-l-2 pl-4 text-[0.9rem] leading-relaxed"
+          style={{ borderColor: MARKER, color: INK_SOFT }}
+        >
+          아이의 작품은 언젠가 상자에 담기거나 사라지지만, 전시는 링크로
+          남습니다. 우리 아이가 무엇을 만들며 자랐는지, 몇 해가 지나도 함께
+          열어볼 수 있게요.
         </p>
 
         {/* 샘플 작품 스트립 — 말보다 눈으로 */}
